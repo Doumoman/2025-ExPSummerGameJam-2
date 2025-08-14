@@ -81,7 +81,7 @@ MonoBehaviour:
   nameText: {fileID: 6817883792521819316}
   description: {fileID: 4496138576150289378}
   priceText: {fileID: 6371556558629328099}
-  boughtColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 0}
+  boughtColor: {r: 1, g: 1, b: 1, a: 0}
   cardColor: {fileID: 3691264634310060798}
 --- !u!114 &4754741396878768374
 MonoBehaviour:
@@ -421,8 +421,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ItemDescription
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 37654eee0da2f8d41b247a3681e563de, type: 2}
+  m_sharedMaterial: {fileID: -7373879946883713233, guid: 37654eee0da2f8d41b247a3681e563de, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -446,8 +446,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.044025064, g: 0.044025064, b: 0.044025064, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -632,8 +632,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ItemName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 448c43af123436a4b809b167ca6bd27c, type: 2}
+  m_sharedMaterial: {fileID: 8554325088880780850, guid: 448c43af123436a4b809b167ca6bd27c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

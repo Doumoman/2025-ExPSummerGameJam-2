@@ -7,7 +7,12 @@ public class ItemManager : MonoBehaviour
 {
     private static ItemManager instance = null;
 
-    public event Action onChanged;
+    [SerializeField]
+    Inventory inven;
+
+    public int myItem = 0;
+
+    public event Action OnChanged;
     public static ItemManager Instance
     {
         get
@@ -37,13 +42,17 @@ public class ItemManager : MonoBehaviour
     public void AddItem(Item newItem)
     {
         items.Add(newItem);
-        UpdateUI();
-        onChanged?.Invoke();
+        UpdateUI(newItem);
     }
 
-    public void UpdateUI()
+    private void UpdateUI(Item newItem)
     {
+        inven.AddItem(newItem);
+    }
 
+    public void myItemPlusOne()
+    {
+        myItem++;
     }
 }
 

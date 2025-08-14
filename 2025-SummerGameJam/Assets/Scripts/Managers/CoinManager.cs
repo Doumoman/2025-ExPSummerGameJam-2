@@ -15,11 +15,13 @@ public class CoinManager : MonoBehaviour
             return instance;
         }
     }
+    const string PP_COIN_KEY = "PlayerCoin";
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            LoadCoin(); // ★ 게임 시작 시 PlayerPrefs에서 불러오기
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -47,11 +49,28 @@ public class CoinManager : MonoBehaviour
         {
             coin -= cost;
             Debug.Log("아이템 구입 성공");
+            SaveCoin(); // ★ 변경될 때마다 저장
             return true;
         }
 
     }
+    //playerPrefs로 저장
+    public void SaveCoin()
+    {
+        PlayerPrefs.SetInt(PP_COIN_KEY, coin);
+        PlayerPrefs.Save();
+    }
 
+    public void LoadCoin()
+    {
+        coin = PlayerPrefs.GetInt(PP_COIN_KEY, coin); // 없으면 현재 값 유지
+    }
+
+    public void ResetCoin(int value = 0)
+    {
+        coin = Mathf.Max(0, value);
+        SaveCoin(); // ★ 변경될 때마다 저장
+    }
     public int GetCoin() => coin;
 }
 

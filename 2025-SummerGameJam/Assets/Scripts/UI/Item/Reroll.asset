@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reroll
   m_EditorClassIdentifier: 
   itemName: "\uB9AC\uB864"
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -4637118698428625674, guid: 72c78e0c114a25a49b94367e5fa1db2b, type: 3}
   price: 3
   itemEffect: "\uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C \uD0C0\uC77C \uB9AC\uB864
     \uD69F\uC218\uB97C \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
