@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class GameUIBtn : MonoBehaviour
 {
     [SerializeField] GameObject popUpUi;
-    [SerializeField] TextMeshProUGUI ScoreText;
-    [SerializeField] TextMeshProUGUI ReRollext;
 
     float score = 5f;
     float reRoll = 5f;
@@ -18,10 +16,7 @@ public class GameUIBtn : MonoBehaviour
 
     private void Update()
     {
-        //score = ScoreManager.instance.score
-        //reRoll = GameManager.reRoll
-        ScoreText.text = "Score: " + score.ToString();
-        ReRollext.text = "ReRoll: " + reRoll.ToString();
+
     }
 
     public void PopupUi()
@@ -41,6 +36,6 @@ public class GameUIBtn : MonoBehaviour
 
     public void ReRoll()
     {
-       //
+        
     }
 }

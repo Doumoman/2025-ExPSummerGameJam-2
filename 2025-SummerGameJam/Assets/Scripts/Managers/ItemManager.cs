@@ -7,6 +7,9 @@ public class ItemManager : MonoBehaviour
 {
     private static ItemManager instance = null;
 
+    [SerializeField]
+    Inventory inven;
+
     public event Action OnChanged;
     public static ItemManager Instance
     {
@@ -40,9 +43,9 @@ public class ItemManager : MonoBehaviour
         UpdateUI(newItem);
     }
 
-    public void UpdateUI(Item newItem)
+    private void UpdateUI(Item newItem)
     {
-
+        inven.AddItem(newItem);
     }
 }
 

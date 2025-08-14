@@ -12,6 +12,12 @@ public class ShopItemCard : MonoBehaviour
     [SerializeField] Image cardColor;
 
     private Item boundItem;
+    Button myButton;
+
+    private void Awake()
+    {
+        myButton = GetComponent<Button>();
+    }
 
     public void Bind(Item item)
     {
@@ -32,6 +38,8 @@ public class ShopItemCard : MonoBehaviour
         {
             cardColor.color = boughtColor;
             ItemManager.Instance.AddItem(boundItem);
+
+            myButton.interactable = false;
         }
     }
 }
