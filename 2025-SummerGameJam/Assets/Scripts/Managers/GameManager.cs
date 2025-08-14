@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    #region  Singleton
 
     static GameManager s_inst;
     public static GameManager Inst
@@ -19,19 +20,6 @@ public class GameManager : MonoBehaviour
             return s_inst;
         }
     }
-
-    ResourceManager _resource = new ResourceManager();
-    SoundManager _sound = new SoundManager();
-
-    [SerializeField]
-    public static ResourceManager Resource { get { return Inst._resource; } }
-    public static SoundManager Sound { get { return Inst._sound; } }
-    public static bool isPlayerZoomOutAllowed = false;
-    public static bool isFinishBossZoominAllowed = false;
-
-    public static bool isStage1Cleared = false;
-    public static bool isStage2Cleared = false;
-    public static bool isStage3Cleared = false;
 
     private void Awake()
     {
@@ -53,11 +41,29 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    #endregion
+    
+    // =============== 인게임 코드 =============
+
+    public int Score = 0;
+
+    public void GetBatchScore(int kan)
+    {
+        Score += kan;
+        UpdateScore();
+    }
+    public void GetDeleteScore(int line, int kan)
+    {
+        Score += line * kan * 5;
+        UpdateScore();
+    }
     private void Start()
     {
         Application.targetFrameRate = 60;
     }
-    private void Update()
+    private void UpdateScore()
     {
+        Debug.Log($"현재 점수 : {Score}");
     }
 }

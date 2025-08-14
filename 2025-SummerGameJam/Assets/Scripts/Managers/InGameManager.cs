@@ -144,6 +144,7 @@ public class InGameManager : MonoBehaviour
                 InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
             DrawManager.Instance.RefreshWorm();
+            GameManager.Inst.GetBatchScore(Worm.transform.childCount);
             Destroy(Worm.gameObject);
         }
         
@@ -154,6 +155,9 @@ public class InGameManager : MonoBehaviour
             Debug.Log($"ÁÂÇ¥: ({pos.x}, {pos.y})");
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
+        
+        GameManager.Inst.GetDeleteScore(result.count, result.count);
+        
         DrawManager.Instance.RefreshWorm();
     }
 
