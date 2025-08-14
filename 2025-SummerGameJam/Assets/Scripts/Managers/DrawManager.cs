@@ -68,7 +68,6 @@ public class DrawManager : MonoBehaviour
                 float spawnX = i % 2 == 0 ? (j - centerCol) *  Mathf.Sqrt(3) / 2f * hexSize : (j - centerCol + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
                 float SpawnY = (i - centerRow) * 0.75f * hexSize;
                 Vector2 spawnPos = new Vector2(spawnX, SpawnY);
-                spawnPos = Camera.main.WorldToScreenPoint(spawnPos);
                 
                 if(_beeHive[i, j] != eBeehiveType.None)
                     Instantiate(hexPrefab, spawnPos, Quaternion.identity, TileContainer);
