@@ -34,12 +34,14 @@ public class ShopItemCard : MonoBehaviour
     {
         if (boundItem == null) return;
 
-        if (CoinManager.Instance.UseCoin(boundItem.price))
+        if (CoinManager.Instance.UseCoin(boundItem.price) && ItemManager.Instance.myItem < 5)
         {
             cardColor.color = boughtColor;
             ItemManager.Instance.AddItem(boundItem);
 
             myButton.interactable = false;
+
+            ItemManager.Instance.myItemPlusOne();
         }
     }
 }

@@ -8,9 +8,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform gridTransform;
     [SerializeField] Image itemImage;
 
-
     public void AddItem(Item newItem)
     {
+
         if(newItem == null)
         {
             return;

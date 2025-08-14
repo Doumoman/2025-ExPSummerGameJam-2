@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: EraseTile
   m_EditorClassIdentifier: 
   itemName: "\uC18E\uC544\uB0B4\uAE30"
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -4828409628533076420, guid: f813bd8229b648746a568e126f2e1021, type: 3}
   price: 5
   itemEffect: "\uC120\uD0DD\uD55C \uD0C0\uC77C \uC8FC\uBCC0 1\uCE78 \uC9C0\uC6B0\uAE30"

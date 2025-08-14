@@ -10,6 +10,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     Inventory inven;
 
+    public int myItem = 0;
+
     public event Action OnChanged;
     public static ItemManager Instance
     {
@@ -46,6 +48,11 @@ public class ItemManager : MonoBehaviour
     private void UpdateUI(Item newItem)
     {
         inven.AddItem(newItem);
+    }
+
+    public void myItemPlusOne()
+    {
+        myItem++;
     }
 }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SetScoreMultiple
   m_EditorClassIdentifier: 
   itemName: "\uD0C0\uC77C \uBC30\uCE58 \uC810\uC218 \uC99D\uAC00"
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 2413715232333512126, guid: ada1a65b2e6605e489bae9e488204222, type: 3}
   price: 7
   itemEffect: "\uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uBD80\uD130 \uC904 \uC9C0\uC6B0\uAE30
     \uBC1C\uB3D9 \uC2DC \uC810\uC218 \uBC30\uC728\uC774 \uAE30\uC874\uC758 2\uBC30\uAC00
