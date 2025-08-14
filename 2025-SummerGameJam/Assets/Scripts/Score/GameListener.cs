@@ -22,6 +22,7 @@ public class GameListener : MonoBehaviour
     [SerializeField] Button nextStageButton;
     [SerializeField] Button addTurnButton;          // NEW: 턴 +1
     [SerializeField] Button restartRunButton; // 재시작 버튼
+    [SerializeField] Button goShopFromClearButton; // 클리어 후 상점 UI 여는 버튼
 
     [Header("Stage Start (Inspector int)")]
     [Tooltip("Start Game 버튼으로 시작할 스테이지 인덱스")]
@@ -46,6 +47,7 @@ public class GameListener : MonoBehaviour
         if (nextStageButton) nextStageButton.onClick.AddListener(OnClickNextStage);
         if (addTurnButton) addTurnButton.onClick.AddListener(OnClickAddTurn); // NEW
         if (restartRunButton) restartRunButton.onClick.AddListener(OnClickRestartStage);
+        if (goShopFromClearButton) goShopFromClearButton.onClick.AddListener(OnClickGoShopFromClear);
         if (SM != null)
         {
             SM.OnScoreChanged += _ => RefreshTexts();
@@ -68,6 +70,7 @@ public class GameListener : MonoBehaviour
         if (nextStageButton) nextStageButton.onClick.RemoveListener(OnClickNextStage);
         if (addTurnButton) addTurnButton.onClick.RemoveListener(OnClickAddTurn);
         if (restartRunButton) restartRunButton.onClick.RemoveListener(OnClickRestartStage);
+        if (goShopFromClearButton) goShopFromClearButton.onClick.RemoveListener(OnClickGoShopFromClear);
 
         if (SM != null)
         {
@@ -115,7 +118,11 @@ public class GameListener : MonoBehaviour
         SM.AddTurns(1);
         RefreshTexts();
     }
-
+    void OnClickGoShopFromClear()
+    {
+        ScoreManager.Instance?.CloseClearPanelAndOpenShopUI();
+        RefreshTexts();
+    }
     void EraseLines(int lines)
     {
         if (SM == null || lines <= 0) return;

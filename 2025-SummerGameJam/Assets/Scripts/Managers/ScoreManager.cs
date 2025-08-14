@@ -77,6 +77,10 @@ public class ScoreManager : MonoBehaviour
     public event Action<int, int> OnTurnStarted;
     public event Action<int, int> OnTurnEnded;
 
+    [Header("When Stage Cleared → Clear Panel")]
+    [SerializeField] GameObject clearPanel;        // ★ 클리어 패널
+    [SerializeField] UnityEvent onStageCleared;    // ★ 클리어 시 훅(효과음/연출 등)
+
     [Header("If Stage Cleared, shopPopup")]
     [SerializeField] GameObject shopUIPanel;
     [SerializeField] UnityEvent onStageEnded;
@@ -292,11 +296,23 @@ public class ScoreManager : MonoBehaviour
         CoinManager.Instance?.SaveCoin(); // 코인 저장
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
-        EndStage();
+        OpenClearPanel();
     }
     public void CloseShop()
     {
         if (shopUIPanel) shopUIPanel.SetActive(false);
+    }
+    public void OpenClearPanel()
+    {
+        onStageCleared?.Invoke();
+        if (clearPanel) clearPanel.SetActive(true);
+    }
+
+    // ★ 클리어 패널 닫고, 상점 UI 열기
+    public void CloseClearPanelAndOpenShopUI()
+    {
+        if (clearPanel) clearPanel.SetActive(false);
+        EndStage(); // 기존 상점 오픈 로직 재사용
     }
 
     // 상점 닫고 다음(또는 지정) 스테이지로 시작
