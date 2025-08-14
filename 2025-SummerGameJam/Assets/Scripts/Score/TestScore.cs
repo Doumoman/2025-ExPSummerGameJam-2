@@ -21,7 +21,7 @@ public class DebugGameUI : MonoBehaviour
     [SerializeField] Button erase3Button;
     [SerializeField] Button nextStageButton;
     [SerializeField] Button addTurnButton;          // NEW: 턴 +1
-    [SerializeField] Button restartButton; // 재시작 버튼
+    [SerializeField] Button restartRunButton; // 재시작 버튼
 
     [Header("Stage Start (Inspector int)")]
     [Tooltip("Start Game 버튼으로 시작할 스테이지 인덱스")]
@@ -45,10 +45,7 @@ public class DebugGameUI : MonoBehaviour
         if (erase3Button) erase3Button.onClick.AddListener(() => EraseLines(3));
         if (nextStageButton) nextStageButton.onClick.AddListener(OnClickNextStage);
         if (addTurnButton) addTurnButton.onClick.AddListener(OnClickAddTurn); // NEW
-        if (restartButton) restartButton.onClick.AddListener(() =>
-        {
-            ScoreManager.Instance?.RestartStage(true);
-        });
+        if (restartRunButton) restartRunButton.onClick.AddListener(OnClickRestartStage);
         if (SM != null)
         {
             SM.OnScoreChanged += _ => RefreshTexts();
@@ -70,10 +67,8 @@ public class DebugGameUI : MonoBehaviour
         if (erase3Button) erase3Button.onClick.RemoveAllListeners();
         if (nextStageButton) nextStageButton.onClick.RemoveListener(OnClickNextStage);
         if (addTurnButton) addTurnButton.onClick.RemoveListener(OnClickAddTurn);
-        void OnDisable()
-        {
-            if (restartButton) restartButton.onClick.RemoveAllListeners();
-        }
+        if (restartRunButton) restartRunButton.onClick.RemoveListener(OnClickRestartStage);
+
         if (SM != null)
         {
             SM.OnScoreChanged -= _ => RefreshTexts();
@@ -130,7 +125,7 @@ public class DebugGameUI : MonoBehaviour
     }
     public void OnClickRestartStage()
     {
-        ScoreManager.Instance?.RestartStage(resetRerolls: true);
+        ScoreManager.Instance?.RestartRun(resetRerolls: true);
     }
     /* ───────── UI 갱신 ───────── */
 

@@ -51,7 +51,10 @@ public class CoinManager : MonoBehaviour
         }
 
     }
-
+    public void ResetCoin(int value = 0)
+    {
+        coin = Mathf.Max(0, value);
+    }
     public int GetCoin() => coin;
 }
 

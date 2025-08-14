@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
     [Header("initial set")]
     [SerializeField] int startTurns = 0;
     [SerializeField] int startRerolls = 3;
+    [SerializeField] int firstStageIndex = 1;
 
     [Header("Row remove score multiply")]
     [SerializeField] int rowCellPoint = 5;
@@ -196,8 +197,16 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(Score);
 
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
+        // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
         CoinManager.Instance?.AddCoin(rowsCleared);
-        EndTurn();
+
+        /* ★ 중요: 먼저 목표 달성 체크 */
+        CheckStageGoal();
+
+        /* ★ 목표 달성되지 않았다면 그때만 턴 소모 */
+        if (!stageCleared)
+            EndTurn();
+
         CheckStageGoal();
         return gain;
     }
@@ -272,12 +281,15 @@ public class ScoreManager : MonoBehaviour
         if (defeatPanel) defeatPanel.SetActive(false);
     }
 
-    // ── 재시작: 해당 스테이지 다시 시작 ─────────────────
-    public void RestartStage(bool resetRerolls = true)  // NEW
+    public void RestartRun(bool resetRerolls = true)
     {
         CloseDefeatPanel();
-        // 점수 0으로 초기화는 StartStage 안에서 이미 수행한다고 가정
-        StartStage(CurrentStage, resetRerolls);
+
+        // 1) 코인 전부 삭제
+        CoinManager.Instance?.ResetCoin(0);
+
+        // 2) 스테이지를 처음부터 시작(점수는 StartStage 내부에서 0으로 초기화됨)
+        StartStage(firstStageIndex, resetRerolls);
     }
     /* ========== Getter ========== */
     public int GetTurn() => Turns;
