@@ -11,7 +11,7 @@ public class InGameManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = FindObjectOfType<InGameManager>();
+                _instance = FindAnyObjectByType<InGameManager>();
                 if (_instance == null)
                 {
                     GameObject go = new GameObject("InGameManager");
@@ -41,20 +41,23 @@ public class InGameManager : MonoBehaviour
     public event Action OnMapChanged;
     public event Action OnWormChanged;
     
-    public int[,] _beeHive = new int[9, 9]; // color 저장
-    public int[,] _worms = new int[9, 9]; // 애벌레 저장 (타입별로 다르게)
+    public eBeehiveType[,] _beeHive = new eBeehiveType[9, 9]; // color 저장
+    public eWormType[,] _worms = new eWormType[9, 9]; // 애벌레 저장 (타입별로 다르게)
 
     private int[] _colorNum = { 20, 20, 20, 20 };
     
     void Initialize()
     {
         
-        
+    }
+
+    public void MakeMap()
+    {
         InitBeeHive();
         
         OnMapChanged?.Invoke();
     }
-
+    
     // 맵 초기화
     void InitBeeHive()
     {
@@ -72,11 +75,11 @@ public class InGameManager : MonoBehaviour
                     // TODO
                     // 색상 수에 맞게 컬러를 배치한다
                     
-                    _beeHive[i, j] = 3;
+                    _beeHive[i, j] = eBeehiveType.Normal;
                 }
                 else
                 {
-                    _beeHive[i, j] = -1;
+                    _beeHive[i, j] = eBeehiveType.None;
                 }
             }
         }
