@@ -154,7 +154,7 @@ public class InGameManager : MonoBehaviour
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         
-        GameManager.Inst.GetDeleteScore(result.count, result.count);
+        GameManager.Inst.GetDeleteScore(result.count, result.coords.Count);
         
         DrawManager.Instance.RefreshWorm();
     }
