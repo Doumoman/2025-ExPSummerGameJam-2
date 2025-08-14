@@ -17,6 +17,7 @@ public enum eBeehiveType
 
 public enum eWormType
 {
+    None,
     TriCycle1,
     TriCycle2,
     TriCycle3,

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 public class InGameManager : MonoBehaviour
 {
@@ -47,6 +50,8 @@ public class InGameManager : MonoBehaviour
     public event Action OnMapChanged;
     public event Action OnWormChanged;
     
+    private List<GameObject> _lightings = new List<GameObject>();
+    
     public eBeehiveType[,] _beeHive = new eBeehiveType[9, 9]; // color 저장
     public eWormType[,] _worms = new eWormType[9, 9]; // 애벌레 저장 (타입별로 다르게)
 
@@ -80,9 +85,6 @@ public class InGameManager : MonoBehaviour
             {
                 if (Mathf.Abs(4 - i) / 2 <= j && j < 9 - (Mathf.Abs(4 - i) + 1) / 2)
                 {
-                    // TODO
-                    // 색상 수에 맞게 컬러를 배치한다
-                    
                     _beeHive[i, j] = eBeehiveType.Normal;
                 }
                 else
@@ -93,6 +95,61 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    public void TurnOff()
+    {
+        foreach (var light in _lightings)
+        {
+            Color c = light.GetComponent<SpriteRenderer>().color;
+            c.a = 1f;
+            light.GetComponent<SpriteRenderer>().color = c;
+        }
+    }
+    public bool CanPlaceWorm(WormTile Worm)
+    {
+        TurnOff();
+        _lightings.Clear();
+        
+        int layerMask = 1 << LayerMask.NameToLayer("Board");
+
+        foreach (Transform child in Worm.transform)
+        {
+            Collider2D col = Physics2D.OverlapPoint(child.position, layerMask);
+            if (!col) return false;
+
+            var tile = col.GetComponent<BoardCell>() ?? col.GetComponentInParent<BoardCell>();
+            if (!tile || tile.bIsOccupied) return false;
+            
+            _lightings.Add(col.gameObject);
+        }
+        
+        foreach (var light in _lightings)
+        {
+            Color c = light.GetComponent<SpriteRenderer>().color;
+            c.a = 224f/ 255f;
+            light.GetComponent<SpriteRenderer>().color = c;
+        }
+        
+        return true;
+    }
+
+    public void PlaceWorm(WormTile Worm)
+    {
+        if (Worm.transform.childCount == _lightings.Count)
+        {
+            foreach (var obj in _lightings)
+            {
+                BoardCell cell = obj.GetComponent<BoardCell>();
+                cell.bIsOccupied = true;
+
+                InGameManager.Instance._worms[cell.x, cell.y] = Worm.WormType;
+            }
+        }
+        DrawManager.Instance.RefreshWorm();
+        
+        // TODO
+        // 1자가 생성되었는지 확인
+    }
+    
     void Noki(int x, int y)
     {
         OnWormChanged?.Invoke();
