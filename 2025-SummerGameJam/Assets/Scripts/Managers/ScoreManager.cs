@@ -66,6 +66,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] GameObject shopUIPanel;
     [SerializeField] UnityEvent onStageEnded;
 
+    [Header("When Stage Defeated → Defeat Panel")]
+    [SerializeField] GameObject defeatPanel;       // 패배 패널
+    [SerializeField] UnityEvent onStageDefeated;   // 패배 시 훅
     void Start()
     {
         Rerolls = startRerolls;
@@ -110,7 +113,7 @@ public class ScoreManager : MonoBehaviour
 
     public void StartStage(int stageIndex, bool resetRerolls = false)
     {
-        BuildStageMap(); // 인스펙터 수정 반영용
+        BuildStageMap(); // 인스펙터 수정 반영
         CurrentStage = stageIndex;
 
         StageConfig cfg;
@@ -120,6 +123,10 @@ public class ScoreManager : MonoBehaviour
         StageTotalTurns = cfg.turns;
         CurrentStageGoal = cfg.goalScore;
         stageCleared = false;
+
+        /* 스테이지 시작 시 점수 초기화 */
+        Score = 0;
+        OnScoreChanged?.Invoke(Score);
 
         Turns = StageTotalTurns;
         if (resetRerolls) Rerolls = startRerolls;
@@ -139,14 +146,26 @@ public class ScoreManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (Turns <= 0) { EndStage(); return; }
+        if (Turns <= 0)  // 안전장치
+        {
+            if (stageCleared) EndStage(); else EndStageDefeat();
+            return;
+        }
 
         Turns = Mathf.Max(0, Turns - 1);
         OnTurnChanged?.Invoke(Turns);
         OnTurnEnded?.Invoke(CurrentStage, Turns);
 
-        if (Turns <= 0) EndStage();
-        else OnTurnStarted?.Invoke(CurrentStage, Turns);
+        if (Turns <= 0)
+        {
+            // 여기서 분기 
+            if (stageCleared) EndStage();      // 목표 달성 후 턴이 0 → 상점(클리어)
+            else EndStageDefeat(); // 목표 미달 & 턴 0 → 패배
+        }
+        else
+        {
+            OnTurnStarted?.Invoke(CurrentStage, Turns);
+        }
     }
 
     public void AddTurns(int add)
@@ -221,7 +240,36 @@ public class ScoreManager : MonoBehaviour
         OnTurnChanged?.Invoke(Turns);
         EndStage();
     }
+    public void CloseShop()
+    {
+        if (shopUIPanel) shopUIPanel.SetActive(false);
+    }
 
+    // 상점 닫고 다음(또는 지정) 스테이지로 시작
+    public void NextStage(int? stageIndexOverride = null, bool resetRerolls = true)
+    {
+        CloseShop();
+        int next = stageIndexOverride.HasValue ? stageIndexOverride.Value : (CurrentStage + 1);
+        StartStage(next, resetRerolls);
+    }
+    // ── DEFEAT 경로: 패배 패널 열기/닫기 ─────────────────
+    public void EndStageDefeat()   // NEW
+    {
+        onStageDefeated?.Invoke();
+        if (defeatPanel) defeatPanel.SetActive(true);
+    }
+    public void CloseDefeatPanel() // NEW
+    {
+        if (defeatPanel) defeatPanel.SetActive(false);
+    }
+
+    // ── 재시작: 해당 스테이지 다시 시작 ─────────────────
+    public void RestartStage(bool resetRerolls = true)  // NEW
+    {
+        CloseDefeatPanel();
+        // 점수 0으로 초기화는 StartStage 안에서 이미 수행한다고 가정
+        StartStage(CurrentStage, resetRerolls);
+    }
     /* ========== Getter ========== */
     public int GetTurn() => Turns;
     public int GetScore() => Score;
