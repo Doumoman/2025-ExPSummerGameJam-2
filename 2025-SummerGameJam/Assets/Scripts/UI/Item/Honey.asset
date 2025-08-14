@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d20f2fa296785246ad3f27ea47a8886, type: 3}
+  m_Name: Honey
+  m_EditorClassIdentifier: 
+  itemName: "\uAFC0\uC870\uB2EC"
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  price: 10
+  itemEffect: "\uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C \uD134\uC774 \uC2DC\uC791\uB420
+    \uB54C\uB9C8\uB2E4 (\uC9C0\uC6CC\uC9C4 \uB204\uC801 \uCE78 \uC218 / 3) \uB9CC\uD07C
+    \uAFC0 \uBE14\uB7ED\uC774 \uC0DD\uC131\uB41C\uB2E4. \uAFC0 \uBE14\uB7ED\uC740
+    \uC9C0\uC6B0\uBA74 \uCD94\uAC00 \uC810\uC218\uB97C \uD68D\uB4DD\uD560 \uC218
+    \uC788\uB2E4."
