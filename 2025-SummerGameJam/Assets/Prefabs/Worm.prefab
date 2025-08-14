@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3395a0aa74e894ba621054bf27f13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WormType: 0
   WormPrefab: {fileID: 5028656816137249169, guid: 40070d0b44af6b846b73d73eadf80661, type: 3}
+  _wormInfo: {fileID: 0}
 --- !u!212 &6534061556564772210
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class WormTile : MonoBehaviour
     private Vector3 offset;
     private float zCoord;
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         transform.localScale = Vector3.one;
         originPos = transform.position;
