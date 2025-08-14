@@ -41,8 +41,8 @@ public class InGameManager : MonoBehaviour
     public event Action OnMapChanged;
     public event Action OnWormChanged;
     
-    private int[,] _beeHive = new int[9, 9]; // color 저장
-    private int[,] _worms = new int[9, 9]; // 애벌레 저장 (타입별로 다르게)
+    public int[,] _beeHive = new int[9, 9]; // color 저장
+    public int[,] _worms = new int[9, 9]; // 애벌레 저장 (타입별로 다르게)
 
     private int[] _colorNum = { 20, 20, 20, 20 };
     
