@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
     [Header("initial set")]
     [SerializeField] int startTurns = 0;
     [SerializeField] int startRerolls = 3;
+    [SerializeField] int firstStageIndex = 1;
 
     [Header("Row remove score multiply")]
     [SerializeField] int rowCellPoint = 5;
@@ -66,6 +67,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] GameObject shopUIPanel;
     [SerializeField] UnityEvent onStageEnded;
 
+    [Header("When Stage Defeated → Defeat Panel")]
+    [SerializeField] GameObject defeatPanel;       // 패배 패널
+    [SerializeField] UnityEvent onStageDefeated;   // 패배 시 훅
     void Start()
     {
         Rerolls = startRerolls;
@@ -110,7 +114,7 @@ public class ScoreManager : MonoBehaviour
 
     public void StartStage(int stageIndex, bool resetRerolls = false)
     {
-        BuildStageMap(); // 인스펙터 수정 반영용
+        BuildStageMap(); // 인스펙터 수정 반영
         CurrentStage = stageIndex;
 
         StageConfig cfg;
@@ -120,6 +124,10 @@ public class ScoreManager : MonoBehaviour
         StageTotalTurns = cfg.turns;
         CurrentStageGoal = cfg.goalScore;
         stageCleared = false;
+
+        /* 스테이지 시작 시 점수 초기화 */
+        Score = 0;
+        OnScoreChanged?.Invoke(Score);
 
         Turns = StageTotalTurns;
         if (resetRerolls) Rerolls = startRerolls;
@@ -139,14 +147,26 @@ public class ScoreManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (Turns <= 0) { EndStage(); return; }
+        if (Turns <= 0)  // 안전장치
+        {
+            if (stageCleared) EndStage(); else EndStageDefeat();
+            return;
+        }
 
         Turns = Mathf.Max(0, Turns - 1);
         OnTurnChanged?.Invoke(Turns);
         OnTurnEnded?.Invoke(CurrentStage, Turns);
 
-        if (Turns <= 0) EndStage();
-        else OnTurnStarted?.Invoke(CurrentStage, Turns);
+        if (Turns <= 0)
+        {
+            // 여기서 분기 
+            if (stageCleared) EndStage();      // 목표 달성 후 턴이 0 → 상점(클리어)
+            else EndStageDefeat(); // 목표 미달 & 턴 0 → 패배
+        }
+        else
+        {
+            OnTurnStarted?.Invoke(CurrentStage, Turns);
+        }
     }
 
     public void AddTurns(int add)
@@ -175,6 +195,18 @@ public class ScoreManager : MonoBehaviour
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         Score += gain;
         OnScoreChanged?.Invoke(Score);
+
+        // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
+        // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
+        CoinManager.Instance?.AddCoin(rowsCleared);
+
+        /* ★ 중요: 먼저 목표 달성 체크 */
+        CheckStageGoal();
+
+        /* ★ 목표 달성되지 않았다면 그때만 턴 소모 */
+        if (!stageCleared)
+            EndTurn();
+
         CheckStageGoal();
         return gain;
     }
@@ -191,6 +223,9 @@ public class ScoreManager : MonoBehaviour
         int bonus = Mathf.RoundToInt(lastGain * (addPercent / 100f));
         Score += bonus;
         OnScoreChanged?.Invoke(Score);
+
+        // 콤보 카운트만큼 코인 추가
+        CoinManager.Instance?.AddCoin(comboCount);
         CheckStageGoal();
         return bonus;
     }
@@ -216,12 +251,46 @@ public class ScoreManager : MonoBehaviour
             Score += Turns * remainTurnScore;
             OnScoreChanged?.Invoke(Score);
         }
-
+        // 코인 보너스(남은 턴 수만큼)
+        if (Turns > 0)
+            CoinManager.Instance?.AddCoin(Turns);
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
         EndStage();
     }
+    public void CloseShop()
+    {
+        if (shopUIPanel) shopUIPanel.SetActive(false);
+    }
 
+    // 상점 닫고 다음(또는 지정) 스테이지로 시작
+    public void NextStage(int? stageIndexOverride = null, bool resetRerolls = true)
+    {
+        CloseShop();
+        int next = stageIndexOverride.HasValue ? stageIndexOverride.Value : (CurrentStage + 1);
+        StartStage(next, resetRerolls);
+    }
+    // ── DEFEAT 경로: 패배 패널 열기/닫기 ─────────────────
+    public void EndStageDefeat()   // NEW
+    {
+        onStageDefeated?.Invoke();
+        if (defeatPanel) defeatPanel.SetActive(true);
+    }
+    public void CloseDefeatPanel() // NEW
+    {
+        if (defeatPanel) defeatPanel.SetActive(false);
+    }
+
+    public void RestartRun(bool resetRerolls = true)
+    {
+        CloseDefeatPanel();
+
+        // 1) 코인 전부 삭제
+        CoinManager.Instance?.ResetCoin(0);
+
+        // 2) 스테이지를 처음부터 시작(점수는 StartStage 내부에서 0으로 초기화됨)
+        StartStage(firstStageIndex, resetRerolls);
+    }
     /* ========== Getter ========== */
     public int GetTurn() => Turns;
     public int GetScore() => Score;
@@ -229,4 +298,5 @@ public class ScoreManager : MonoBehaviour
     public int GetReroll() => Rerolls;
     public int GetStageGoal() => CurrentStageGoal;
     public int GetStageTotalTurns() => StageTotalTurns;
+    public int GetCoin() => CoinManager.Instance ? CoinManager.Instance.GetCoin() : 0;
 }

@@ -8,22 +8,25 @@ public class WormTile : MonoBehaviour
     
     public GameObject WormPrefab;
     
-    public void Initialize(WormInfo wormInfo)
+    public void Initialize(WormInfo wormInfo, Vector2 pos)
     {
         var wormPosList = wormInfo.WormPosList;
 
         for (int i = 0; i < wormInfo.WormPosList.Count; i++)
         {
             var curPos = wormInfo.WormPosList[i];
-            float spawnX = curPos.x % 2 == 0 ? curPos.y * Mathf.Sqrt(3) / 2f * hexSize : (curPos.y + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
+            float spawnX = curPos.x % 2 == 0
+                ? curPos.y * Mathf.Sqrt(3) / 2f * hexSize
+                : (curPos.y + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
             float spawnY = curPos.x * 0.75f * hexSize;
 
             Vector2 spawnPos = new Vector2(spawnX, spawnY);
 
             Instantiate(WormPrefab, spawnPos, quaternion.identity, transform);
         }
-        // posList에 맞게 타일을 그려준다
-        
+
+        transform.localScale = new Vector2(0.6f, 0.6f);
+        transform.position = pos;
     }
 
     private Vector2 originPos;
@@ -32,6 +35,7 @@ public class WormTile : MonoBehaviour
 
     void OnMouseDown()
     {
+        transform.localScale = Vector3.one;
         originPos = transform.position;
         
         // 클릭 시 오브젝트까지의 Z좌표 저장
@@ -49,6 +53,7 @@ public class WormTile : MonoBehaviour
     void OnMouseUp()
     {
         transform.position = originPos;
+        transform.localScale = new Vector2(0.6f, 0.6f);
     }
 
     private Vector3 GetMouseWorldPos()
