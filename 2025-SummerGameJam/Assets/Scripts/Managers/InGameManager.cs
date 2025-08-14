@@ -21,7 +21,7 @@ public class InGameManager : MonoBehaviour
             return _instance;
         }
     }
-    
+
     void Awake()
     {
         if (_instance == null)
@@ -35,9 +35,15 @@ public class InGameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Initialize()
+    {
+        
+    }
     #endregion
     
     // ========== 인게임 코드 ==============
+    private WormSpawner _wormSpawner;
     public event Action OnMapChanged;
     public event Action OnWormChanged;
     
@@ -45,10 +51,10 @@ public class InGameManager : MonoBehaviour
     public eWormType[,] _worms = new eWormType[9, 9]; // 애벌레 저장 (타입별로 다르게)
 
     private int[] _colorNum = { 20, 20, 20, 20 };
-    
-    void Initialize()
+
+    private void Start()
     {
-        
+        _wormSpawner = GetComponent<WormSpawner>();
     }
 
     public void MakeMap()
@@ -56,6 +62,8 @@ public class InGameManager : MonoBehaviour
         InitBeeHive();
         
         OnMapChanged?.Invoke();
+
+        _wormSpawner.SpawnWorm();
     }
     
     // 맵 초기화
@@ -93,7 +101,6 @@ public class InGameManager : MonoBehaviour
     // 새로운 맵 생성
     void RefreshMap()
     {
-        // 5x5 헥사맵 총 개수 : 61
         OnMapChanged?.Invoke();
     }
 }

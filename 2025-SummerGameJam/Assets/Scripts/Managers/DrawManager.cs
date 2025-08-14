@@ -54,6 +54,8 @@ public class DrawManager : MonoBehaviour
     
     void Build()
     {
+        RemoveTile();
+        
         var _beeHive = InGameManager.Instance._beeHive;
         
         if (!hexPrefab) return;
@@ -74,7 +76,15 @@ public class DrawManager : MonoBehaviour
             }
         }
     }
-
+    
+    void RemoveTile()
+    {
+        foreach (Transform child in TileContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
     void ApplyMapImage(eBeehiveType beehiveType)
     {
         switch (beehiveType)
