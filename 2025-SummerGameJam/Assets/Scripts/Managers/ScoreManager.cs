@@ -1,206 +1,232 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
-    int[,] _tileMap = new int[5, 6];
-    int[,] _bugMap = new int [5, 6];
-    
-    // ìœ¡ê°í˜• íƒ€ì¼ë§µì˜ 6ê°œ ë°©í–¥ (Flat-top hexagon ê¸°ì¤€)
-    Vector2Int[] hexDirections = {
-        new Vector2Int(1, 0),   // ë™ìª½
-        new Vector2Int(1, -1),  // ë‚¨ë™ìª½
-        new Vector2Int(0, -1),  // ë‚¨ì„œìª½
-        new Vector2Int(-1, 0),  // ì„œìª½
-        new Vector2Int(-1, 1),  // ë¶ì„œìª½
-        new Vector2Int(0, 1)    // ë¶ë™ìª½
-    };
-    
+    #region Singleton
+    public static ScoreManager Instance { get; private set; }
+    void Awake()
+    {
+        if (Instance && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        BuildStageMap();
+    }
+    #endregion
+
+    [Header("initial set")]
+    [SerializeField] int startTurns = 0;
+    [SerializeField] int startRerolls = 3;
+
+    [Header("Row remove score multiply")]
+    [SerializeField] int rowCellPoint = 5;
+
+    [Header("Remain Turn score multiply")]
+    [SerializeField] int remainTurnScore = 3;      // ³²Àº ÅÏ 1°³´ç Ãß°¡ Á¡¼ö
+
+    [Header("Combo Bonus(%)")]
+    [SerializeField] int combo1Bonus = 10;
+    [SerializeField] int combo2Bonus = 25;
+    [SerializeField] int combo3Bonus = 50;
+    [SerializeField] int combo4PlusBonus = 100;
+
+    /* ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ´ÜÀÏ ½ºÅ×ÀÌÁö Å×ÀÌºí ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ */
+    [Serializable]
+    public class StageConfig
+    {
+        public int stageIndex;
+        public int turns;
+        public int goalScore;
+    }
+
+    [Header("Stage Table (Turns + Goal)")]
+    [SerializeField] List<StageConfig> stageTable = new();   // ÀÎ½ºÆåÅÍ¿¡¼­ °ü¸®
+    Dictionary<int, StageConfig> stageMap = new();           // ·±Å¸ÀÓ Á¶È¸ Ä³½Ã
+
+    /* ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ »óÅÂ ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ */
+    public int CurrentStage { get; private set; } = -1;
+    public int StageTotalTurns { get; private set; }
+    public int CurrentStageGoal { get; private set; }
+    bool stageCleared;
+
+    public int Score { get; private set; }
+    public int Turns { get; private set; }
+    public int Rerolls { get; private set; }
+
+    /* ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ÀÌº¥Æ® ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ */
+    public event Action<int> OnScoreChanged;
+    public event Action<int> OnTurnChanged;
+    public event Action<int> OnRerollChanged;
+    public event Action<int, int> OnTurnStarted;
+    public event Action<int, int> OnTurnEnded;
+
+    [Header("If Stage Cleared, shopPopup")]
+    [SerializeField] GameObject shopUIPanel;
+    [SerializeField] UnityEvent onStageEnded;
+
     void Start()
     {
-        // í…ŒìŠ¤íŠ¸ìš© íƒ€ì¼ë§µ ì´ˆê¸°í™”
-        InitializeTestTileMap();
-        
-        // ì§ì„  íƒì§€ ë° bugMap ì„¤ì •
-        DetectAndMarkLines();
-        
-        // ê²°ê³¼ ì¶œë ¥
-        PrintResults();
+        Rerolls = startRerolls;
+        Turns = startTurns;
+        FireAllEvents();
     }
-    
-    void InitializeTestTileMap()
+
+    void BuildStageMap()
     {
-        // ì˜ˆì‹œ: ëŒ€ê°ì„ ìœ¼ë¡œ ê°™ì€ íƒ€ì…ì˜ íƒ€ì¼ ë°°ì¹˜
-        _tileMap[0, 0] = 1;
-        _tileMap[1, 0] = 1;
-        _tileMap[2, 0] = 1;
-        _tileMap[3, 0] = 1;
-        
-        // ë‹¤ë¥¸ ì§ì„  ì˜ˆì‹œ
-        _tileMap[1, 2] = 2;
-        _tileMap[1, 3] = 2;
-        _tileMap[1, 4] = 2;
-    }
-    
-    void DetectAndMarkLines()
-    {
-        // bugMap ì´ˆê¸°í™”
-        for (int x = 0; x < 5; x++)
+        stageMap.Clear();
+        foreach (var cfg in stageTable)
         {
-            for (int y = 0; y < 6; y++)
+            if (cfg == null) continue;
+            stageMap[cfg.stageIndex] = new StageConfig
             {
-                _bugMap[x, y] = 0;
-            }
-        }
-        
-        // ê° ìœ„ì¹˜ì—ì„œ 6ê°œ ë°©í–¥ìœ¼ë¡œ ì§ì„  íƒì§€
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 6; y++)
-            {
-                CheckLinesFromPosition(x, y);
-            }
+                stageIndex = cfg.stageIndex,
+                turns = Mathf.Max(0, cfg.turns),
+                goalScore = Mathf.Max(0, cfg.goalScore)
+            };
         }
     }
-    
-    void CheckLinesFromPosition(int startX, int startY)
+
+    void FireAllEvents()
     {
-        int currentTileType = _tileMap[startX, startY];
-        
-        // ê° ë°©í–¥ìœ¼ë¡œ ì§ì„  íƒì§€
-        for (int dir = 0; dir < 6; dir++)
+        OnScoreChanged?.Invoke(Score);
+        OnTurnChanged?.Invoke(Turns);
+        OnRerollChanged?.Invoke(Rerolls);
+    }
+
+    /* ========================= ½ºÅ×ÀÌÁö Á¦¾î ========================= */
+
+    // ÀÎ½ºÆåÅÍ ¿Ü¿¡ ·±Å¸ÀÓ¿¡¼­µµ ¼öÁ¤ °¡´É
+    public void SetStageConfig(int stageIndex, int turns, int goalScore)
+    {
+        var cfg = new StageConfig { stageIndex = stageIndex, turns = Mathf.Max(0, turns), goalScore = Mathf.Max(0, goalScore) };
+        stageMap[stageIndex] = cfg;
+
+        int idx = stageTable.FindIndex(s => s.stageIndex == stageIndex);
+        if (idx >= 0) stageTable[idx] = cfg;
+        else stageTable.Add(cfg);
+    }
+
+    public void StartStage(int stageIndex, bool resetRerolls = false)
+    {
+        BuildStageMap(); // ÀÎ½ºÆåÅÍ ¼öÁ¤ ¹İ¿µ¿ë
+        CurrentStage = stageIndex;
+
+        StageConfig cfg;
+        if (!stageMap.TryGetValue(stageIndex, out cfg))
+            cfg = new StageConfig { stageIndex = stageIndex, turns = startTurns, goalScore = 0 };
+
+        StageTotalTurns = cfg.turns;
+        CurrentStageGoal = cfg.goalScore;
+        stageCleared = false;
+
+        Turns = StageTotalTurns;
+        if (resetRerolls) Rerolls = startRerolls;
+
+        OnTurnChanged?.Invoke(Turns);
+        OnRerollChanged?.Invoke(Rerolls);
+        OnTurnStarted?.Invoke(CurrentStage, Turns);
+    }
+
+    public void EndStage()
+    {
+        onStageEnded?.Invoke();
+        if (shopUIPanel) shopUIPanel.SetActive(true); // »óÁ¡ ¿ÀÇÂ
+    }
+
+    /* ========================= ÅÏ/Á¡¼ö API ========================= */
+
+    public void EndTurn()
+    {
+        if (Turns <= 0) { EndStage(); return; }
+
+        Turns = Mathf.Max(0, Turns - 1);
+        OnTurnChanged?.Invoke(Turns);
+        OnTurnEnded?.Invoke(CurrentStage, Turns);
+
+        if (Turns <= 0) EndStage();
+        else OnTurnStarted?.Invoke(CurrentStage, Turns);
+    }
+
+    public void AddTurns(int add)
+    {
+        Turns = Mathf.Max(0, Turns + add);
+        StageTotalTurns = Mathf.Max(StageTotalTurns, Turns);
+        OnTurnChanged?.Invoke(Turns);
+    }
+    public void AddRerolls(int add)
+    {
+        Rerolls = Mathf.Max(0, Rerolls + add);
+        OnRerollChanged?.Invoke(Rerolls);
+    }
+
+    public int AddPlacementScore(int placedTileCount)
+    {
+        if (placedTileCount <= 0) return 0;
+        Score += placedTileCount;
+        OnScoreChanged?.Invoke(Score);
+        CheckStageGoal();
+        return placedTileCount;
+    }
+    public int AddRowClearScore(int cellsPerRow, int rowsCleared)
+    {
+        if (cellsPerRow <= 0 || rowsCleared <= 0) return 0;
+        int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
+        Score += gain;
+        OnScoreChanged?.Invoke(Score);
+        CheckStageGoal();
+        return gain;
+    }
+    public int AddComboBonus(int comboCount, int lastGain)
+    {
+        if (comboCount <= 0 || lastGain <= 0) return 0;
+        int addPercent = comboCount switch
         {
-            var line = GetLineInDirection(startX, startY, dir, currentTileType);
-            
-            // 3ê°œ ì´ìƒ ì—°ê²°ëœ ì§ì„ ì´ë©´ bugMapì— -1 ì„¤ì •
-            if (line.Count >= 3)
-            {
-                foreach (var pos in line)
-                {
-                    _bugMap[pos.x, pos.y] = -1;
-                }
-            }
-        }
+            1 => combo1Bonus,
+            2 => combo2Bonus,
+            3 => combo3Bonus,
+            _ => combo4PlusBonus
+        };
+        int bonus = Mathf.RoundToInt(lastGain * (addPercent / 100f));
+        Score += bonus;
+        OnScoreChanged?.Invoke(Score);
+        CheckStageGoal();
+        return bonus;
     }
-    
-    System.Collections.Generic.List<Vector2Int> GetLineInDirection(int startX, int startY, int direction, int tileType)
+
+    /* ========================= ¸ñÇ¥ ´Ş¼º Ã³¸® ========================= */
+
+    void CheckStageGoal()
     {
-        var line = new System.Collections.Generic.List<Vector2Int>();
-        Vector2Int currentPos = new Vector2Int(startX, startY);
-        Vector2Int dir = hexDirections[direction];
-        
-        // ì‹œì‘ ìœ„ì¹˜ë¶€í„° í•´ë‹¹ ë°©í–¥ìœ¼ë¡œ ê°™ì€ íƒ€ì…ì˜ íƒ€ì¼ì„ ì°¾ì•„ë‚˜ê°
-        while (IsValidPosition(currentPos.x, currentPos.y) && 
-               _tileMap[currentPos.x, currentPos.y] == tileType)
+        if (stageCleared) return;
+        if (CurrentStage < 0) return;
+
+        if (CurrentStageGoal > 0 && Score >= CurrentStageGoal)
+            StageClear();
+    }
+
+    void StageClear()
+    {
+        stageCleared = true;
+
+        // ³²Àº ÅÏ º¸³Ê½º: ³²ÀºÅÏ ¡¿ remainTurnScore
+        if (Turns > 0 && remainTurnScore > 0)
         {
-            line.Add(currentPos);
-            currentPos += dir;
-            
-            // ìœ¡ê°í˜• ì¢Œí‘œê³„ì—ì„œ yì¢Œí‘œ ì¡°ì • (í™€ìˆ˜/ì§ìˆ˜ í–‰ì— ë”°ë¼)
-            currentPos = AdjustHexCoordinate(currentPos, dir);
+            Score += Turns * remainTurnScore;
+            OnScoreChanged?.Invoke(Score);
         }
-        
-        return line;
+
+        Turns = 0;
+        OnTurnChanged?.Invoke(Turns);
+        EndStage();
     }
-    
-    Vector2Int AdjustHexCoordinate(Vector2Int pos, Vector2Int direction)
-    {
-        // Flat-top ìœ¡ê°í˜•ì—ì„œ í™€ìˆ˜/ì§ìˆ˜ í–‰ì— ë”°ë¥¸ ì¢Œí‘œ ì¡°ì •
-        // ì´ ë¶€ë¶„ì€ ì‚¬ìš©í•˜ëŠ” ìœ¡ê°í˜• ì¢Œí‘œê³„ì— ë”°ë¼ ì¡°ì •ì´ í•„ìš”í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤
-        return pos;
-    }
-    
-    bool IsValidPosition(int x, int y)
-    {
-        return x >= 0 && x < 5 && y >= 0 && y < 6;
-    }
-    
-    // ë” ì •í™•í•œ ìœ¡ê°í˜• ì§ì„  íƒì§€ (ëª¨ë“  ë°©í–¥ ê³ ë ¤)
-    public void DetectAllHexLines(int minLineLength = 3)
-    {
-        // bugMap ì´ˆê¸°í™”
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 6; y++)
-            {
-                _bugMap[x, y] = 0;
-            }
-        }
-        
-        bool[,] visited = new bool[5, 6];
-        
-        // ëª¨ë“  ìœ„ì¹˜ì—ì„œ ì§ì„  íƒì§€
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 6; y++)
-            {
-                if (!visited[x, y])
-                {
-                    CheckAllDirectionsFromPosition(x, y, visited, minLineLength);
-                }
-            }
-        }
-    }
-    
-    void CheckAllDirectionsFromPosition(int startX, int startY, bool[,] visited, int minLineLength)
-    {
-        int tileType = _tileMap[startX, startY];
-        
-        // 6ê°œ ë°©í–¥ ëª¨ë‘ ê²€ì‚¬
-        for (int dir = 0; dir < 6; dir++)
-        {
-            var linePositions = new System.Collections.Generic.List<Vector2Int>();
-            
-            // í•´ë‹¹ ë°©í–¥ìœ¼ë¡œ ì—°ì†ëœ ê°™ì€ íƒ€ì… íƒ€ì¼ ì°¾ê¸°
-            Vector2Int currentPos = new Vector2Int(startX, startY);
-            Vector2Int direction = hexDirections[dir];
-            
-            while (IsValidPosition(currentPos.x, currentPos.y) && 
-                   _tileMap[currentPos.x, currentPos.y] == tileType)
-            {
-                linePositions.Add(currentPos);
-                currentPos += direction;
-            }
-            
-            // ìµœì†Œ ê¸¸ì´ ì´ìƒì´ë©´ bugMapì— í‘œì‹œ
-            if (linePositions.Count >= minLineLength)
-            {
-                foreach (var pos in linePositions)
-                {
-                    _bugMap[pos.x, pos.y] = -1;
-                    visited[pos.x, pos.y] = true;
-                }
-            }
-        }
-    }
-    
-    void PrintResults()
-    {
-        Debug.Log("=== TileMap ===");
-        for (int y = 5; y >= 0; y--)
-        {
-            string row = "";
-            for (int x = 0; x < 5; x++)
-            {
-                row += _tileMap[x, y] + " ";
-            }
-            Debug.Log(row);
-        }
-        
-        Debug.Log("=== BugMap ===");
-        for (int y = 5; y >= 0; y--)
-        {
-            string row = "";
-            for (int x = 0; x < 5; x++)
-            {
-                row += _bugMap[x, y].ToString().PadLeft(2) + " ";
-            }
-            Debug.Log(row);
-        }
-    }
-    
-    // ì™¸ë¶€ì—ì„œ í˜¸ì¶œí•  ìˆ˜ ìˆëŠ” ë©”ì¸ í•¨ìˆ˜
-    public void ProcessTileMapLines()
-    {
-        DetectAllHexLines(3); // 3ê°œ ì´ìƒ ì—°ê²°ëœ ì§ì„  íƒì§€
-    }
+
+    /* ========== Getter ========== */
+    public int GetTurn() => Turns;
+    public int GetScore() => Score;
+    public int GetStage() => CurrentStage;
+    public int GetReroll() => Rerolls;
+    public int GetStageGoal() => CurrentStageGoal;
+    public int GetStageTotalTurns() => StageTotalTurns;
 }
