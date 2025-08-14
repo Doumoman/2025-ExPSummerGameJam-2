@@ -46,16 +46,32 @@ public class GameManager : MonoBehaviour
     
     // =============== 인게임 코드 =============
 
+    ResourceManager _resource = new ResourceManager();
+    SoundManager _sound = new SoundManager();
+
+    [SerializeField]
+    public static ResourceManager Resource { get { return Inst._resource; } }
+    public static SoundManager Sound { get { return Inst._sound; } }
+    public static bool isPlayerZoomOutAllowed = false;
+    public static bool isFinishBossZoominAllowed = false;
+
+    public static bool isStage1Cleared = false;
+    public static bool isStage2Cleared = false;
+    public static bool isStage3Cleared = false;
+
+    
     public int Score = 0;
 
     public void GetBatchScore(int kan)
     {
         Score += kan;
+        Debug.Log(kan);
         UpdateScore();
     }
     public void GetDeleteScore(int line, int kan)
     {
         Score += line * kan * 5;
+        Debug.Log(line * kan * 5);
         UpdateScore();
     }
     private void Start()
