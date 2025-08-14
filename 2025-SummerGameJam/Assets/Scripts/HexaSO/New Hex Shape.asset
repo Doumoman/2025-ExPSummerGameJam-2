@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f833c4eb2b0126747bcf99290eeaea5d, type: 3}
+  m_Name: New Hex Shape
+  m_EditorClassIdentifier: 
+  offsets:
+  - {x: 0, y: 0}
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
