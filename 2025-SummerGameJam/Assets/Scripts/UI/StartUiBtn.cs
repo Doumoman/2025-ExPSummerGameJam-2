@@ -25,10 +25,9 @@ public class SrartUiBtn : MonoBehaviour
         panelIsOn = true;
     }
 
-    public void CreditBtn()
+    public void RestartBtn()
     {
-        CreditPanel.SetActive(true);
-        panelIsOn = true;
+        //load
     }
 
     public void ClosePanel()

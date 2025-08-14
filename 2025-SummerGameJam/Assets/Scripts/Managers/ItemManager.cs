@@ -7,7 +7,7 @@ public class ItemManager : MonoBehaviour
 {
     private static ItemManager instance = null;
 
-    public event Action onChanged;
+    public event Action OnChanged;
     public static ItemManager Instance
     {
         get
@@ -37,11 +37,10 @@ public class ItemManager : MonoBehaviour
     public void AddItem(Item newItem)
     {
         items.Add(newItem);
-        UpdateUI();
-        onChanged?.Invoke();
+        UpdateUI(newItem);
     }
 
-    public void UpdateUI()
+    public void UpdateUI(Item newItem)
     {
 
     }
