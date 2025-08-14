@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37e27ef4c9f9bae4ea35c698e131ef37, type: 3}
-  m_Name: TriCycle2
+  m_Name: TriCycle1-3 1
   m_EditorClassIdentifier: 
   wormPosList:
   - x: 0
     y: 0
-  - x: 1
-    y: 0
+  - x: 0
+    y: 1
   - x: -1
     y: -1
+  WormSprite: {fileID: -2994280590171296682, guid: 57d39099642876148a0825c8d18d03b5, type: 3}
