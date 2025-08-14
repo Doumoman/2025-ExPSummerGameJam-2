@@ -17,6 +17,7 @@ public class WormSpawner : MonoBehaviour
         weights = new Dictionary<eWormType, int>();
         foreach (eWormType type in Enum.GetValues(typeof(eWormType)))
         {
+            if (type == eWormType.None) continue;
             weights[type] = 1;
         }
     }
@@ -82,7 +83,7 @@ public class WormSpawner : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject worm = Instantiate(wormTile, Vector3.zero, Quaternion.identity, wormContainer);
-            worm.GetComponent<WormTile>().Initialize(GetWormInfo(worms[i]), spawnPoint[i].position);
+            worm.GetComponent<WormTile>().Initialize(GetWormInfo(worms[i]), spawnPoint[i].position, worms[i]);
         }
     }
 

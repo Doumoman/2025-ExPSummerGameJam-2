@@ -5,24 +5,32 @@ using UnityEngine;
 public class WormTile : MonoBehaviour
 {
     private float hexSize = 1f;
+
+    public eWormType WormType;
     
     public GameObject WormPrefab;
+
+    public WormInfo _wormInfo;
     
-    public void Initialize(WormInfo wormInfo, Vector2 pos)
+    public void Initialize(WormInfo wormInfo, Vector2 pos, eWormType type)
     {
+        _wormInfo = wormInfo;
+        WormType = type;
+        
         var wormPosList = wormInfo.WormPosList;
 
         for (int i = 0; i < wormInfo.WormPosList.Count; i++)
         {
             var curPos = wormInfo.WormPosList[i];
-            float spawnX = curPos.x % 2 == 0
-                ? curPos.y * Mathf.Sqrt(3) / 2f * hexSize
-                : (curPos.y + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
-            float spawnY = curPos.x * 0.75f * hexSize;
+            float spawnX = curPos.y % 2 == 0
+                ? curPos.x * Mathf.Sqrt(3) / 2f * hexSize
+                : (curPos.x + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
+            float spawnY = curPos.y * 0.75f * hexSize;
 
             Vector2 spawnPos = new Vector2(spawnX, spawnY);
-
-            Instantiate(WormPrefab, spawnPos, quaternion.identity, transform);
+            
+            Worm worm = Instantiate(WormPrefab, spawnPos, quaternion.identity, transform).GetComponent<Worm>();
+            worm.Initialize(wormInfo);
         }
 
         transform.localScale = new Vector2(0.6f, 0.6f);
@@ -48,10 +56,25 @@ public class WormTile : MonoBehaviour
     {
         // 마우스 위치 + offset 만큼 이동
         transform.position = GetMouseWorldPos() + offset;
+        
+        int boardLayer = LayerMask.NameToLayer("Board");
+        int layerMask = 1 << boardLayer;
+        
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1, layerMask);
+        if (hit.collider != null)
+        {
+            BoardCell tile = hit.collider.GetComponent<BoardCell>();
+            bool canPlace = InGameManager.Instance.CanPlaceWorm(this);
+            string log = InGameManager.Instance._beeHive[tile.y, tile.x] == eBeehiveType.Normal ? "Can Place" : "Not be Placed";
+            string log2 = canPlace ? "Can Place" : "Not be Placed";
+            Debug.Log($"{tile.x}, {tile.y}, {log}, {log2}");
+        }   
     }
 
     void OnMouseUp()
     {
+        InGameManager.Instance.TurnOff();
+        
         transform.position = originPos;
         transform.localScale = new Vector2(0.6f, 0.6f);
     }

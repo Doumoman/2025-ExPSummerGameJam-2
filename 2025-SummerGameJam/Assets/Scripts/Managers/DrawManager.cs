@@ -42,6 +42,9 @@ public class DrawManager : MonoBehaviour
     public Transform TileContainer;
     public GameObject hexPrefab;
 
+    public Transform WormContainer;
+    public GameObject wormPrefab;
+
     private int centerCol = 4;
     private int centerRow = 4;
 
@@ -70,9 +73,34 @@ public class DrawManager : MonoBehaviour
                 float spawnX = i % 2 == 0 ? (j - centerCol) *  Mathf.Sqrt(3) / 2f * hexSize : (j - centerCol + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
                 float SpawnY = (i - centerRow) * 0.75f * hexSize;
                 Vector2 spawnPos = new Vector2(spawnX, SpawnY);
+
+                if (_beeHive[i, j] != eBeehiveType.None)
+                {
+                    GameObject obj = Instantiate(hexPrefab, spawnPos, Quaternion.identity, TileContainer);
+                    obj.GetComponent<BoardCell>().x = j;
+                    obj.GetComponent<BoardCell>().y = i;
+                }
+            }
+        }
+    }
+
+    public void RefreshWorm()
+    {
+        var _worms = InGameManager.Instance._worms;
+        
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                float spawnX = i % 2 == 0 ? (j - centerCol) *  Mathf.Sqrt(3) / 2f * hexSize : (j - centerCol + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
+                float SpawnY = (i - centerRow) * 0.75f * hexSize;
+                Vector2 spawnPos = new Vector2(spawnX, SpawnY);
                 
-                if(_beeHive[i, j] != eBeehiveType.None)
-                    Instantiate(hexPrefab, spawnPos, Quaternion.identity, TileContainer);
+                if (_worms[i, j] == eWormType.None)
+                {
+                    GameObject obj = Instantiate(wormPrefab, spawnPos, Quaternion.identity, TileContainer);
+                    
+                }
             }
         }
     }
@@ -83,6 +111,10 @@ public class DrawManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    void RemoveWorm()
+    {
     }
     
     void ApplyMapImage(eBeehiveType beehiveType)

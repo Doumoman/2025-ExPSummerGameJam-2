@@ -15,5 +15,7 @@ public class WormInfo : ScriptableObject
     [SerializeField]
     private List<WormPos> wormPosList;
 
+    [SerializeField] public Sprite WormSprite;
+
     public List<WormPos> WormPosList => wormPosList;
 }
