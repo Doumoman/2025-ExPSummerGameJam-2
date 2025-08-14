@@ -48,6 +48,8 @@ public class InGameManager : MonoBehaviour
     
     void Initialize()
     {
+        
+        
         InitBeeHive();
         
         OnMapChanged?.Invoke();
@@ -76,8 +78,6 @@ public class InGameManager : MonoBehaviour
                 {
                     _beeHive[i, j] = -1;
                 }
-                
-                Debug.Log($"{_beeHive[i, j]}");
             }
         }
     }
