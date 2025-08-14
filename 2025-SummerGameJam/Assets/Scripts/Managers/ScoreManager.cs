@@ -337,10 +337,11 @@ public class ScoreManager : MonoBehaviour
     {
         CloseDefeatPanel();
 
-        // 1) 코인 전부 삭제
+        // 코인 전부 삭제
         CoinManager.Instance?.ResetCoin(0);
-
-        // 2) 스테이지를 처음부터 시작(점수는 StartStage 내부에서 0으로 초기화됨)
+        // 인벤토리에 아이템 전부 삭제
+        ItemManager.Instance?.ClearAllItems();
+        // 스테이지를 처음부터 시작(점수는 StartStage 내부에서 0으로 초기화됨)
         StartStage(firstStageIndex, resetRerolls);
         ResetSavedProgress();
     }

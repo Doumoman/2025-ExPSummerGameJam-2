@@ -10,6 +10,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] Inventory inven;
     public List<Item> items = new List<Item>();
     public int myItem = 0;
+
     public event Action OnChanged;
 
     public event Action<IReadOnlyList<Item>> OnItemsChanged;
