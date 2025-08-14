@@ -65,15 +65,13 @@ public class WormTile : MonoBehaviour
         {
             BoardCell tile = hit.collider.GetComponent<BoardCell>();
             bool canPlace = InGameManager.Instance.CanPlaceWorm(this);
-            string log = InGameManager.Instance._beeHive[tile.y, tile.x] == eBeehiveType.Normal ? "Can Place" : "Not be Placed";
-            string log2 = canPlace ? "Can Place" : "Not be Placed";
-            Debug.Log($"{tile.x}, {tile.y}, {log}, {log2}");
         }   
     }
 
     void OnMouseUp()
     {
         InGameManager.Instance.TurnOff();
+        InGameManager.Instance.PlaceWorm(this);
         
         transform.position = originPos;
         transform.localScale = new Vector2(0.6f, 0.6f);

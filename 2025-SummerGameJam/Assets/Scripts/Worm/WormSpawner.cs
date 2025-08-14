@@ -78,6 +78,8 @@ public class WormSpawner : MonoBehaviour
     
     public void SpawnWorm()
     {
+        RemoveWorm();
+        
         List<eWormType> worms = PickThree();
         
         for (int i = 0; i < 3; i++)
