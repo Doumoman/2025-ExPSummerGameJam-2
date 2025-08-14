@@ -149,10 +149,8 @@ public class InGameManager : MonoBehaviour
         }
         
         var result = GetLines();
-        Debug.Log($"총 {result.count}개의 WormInfo가 존재합니다.");
         foreach (var pos in result.coords)
         {
-            Debug.Log($"좌표: ({pos.x}, {pos.y})");
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         

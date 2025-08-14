@@ -6,42 +6,37 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    #region  Singleton
-
-    static GameManager s_inst;
+    #region Singleton
+    private static GameManager _instance;
     public static GameManager Inst
     {
         get
         {
-            if (s_inst == null)
+            if (_instance == null)
             {
-                s_inst = new GameManager();
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("InGameManager");
+                    _instance = go.AddComponent<GameManager>();
+                }
             }
-            return s_inst;
+            return _instance;
         }
     }
-
-    private void Awake()
+    
+    void Awake()
     {
-        Init();
-    }
-    static void Init()
-    {
-        if (s_inst == null)
+        if (_instance == null)
         {
-            GameObject go = GameObject.Find("@GameManager");
-            if (go == null)
-            {
-                go = new GameObject { name = "@GameManager" };
-                go.AddComponent<GameManager>();
-            }
-
-            DontDestroyOnLoad(go);
-            s_inst = go.GetComponent<GameManager>();
-
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
         }
     }
-
     #endregion
     
     // =============== 인게임 코드 =============

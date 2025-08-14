@@ -91,7 +91,6 @@ public class DrawManager : MonoBehaviour
         var _worms = InGameManager.Instance._worms;
 
         BoardCell[] cells = FindObjectsByType<BoardCell>(FindObjectsSortMode.None);
-        Debug.Log($"Ã£Àº {cells.Length}");
         
         for (int i = 0; i < 9; i++)
         {
