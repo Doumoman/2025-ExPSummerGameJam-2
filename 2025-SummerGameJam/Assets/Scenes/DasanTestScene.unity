@@ -281,9 +281,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 840560671}
-        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
-        m_MethodName: MakeMap
+      - m_Target: {fileID: 840560674}
+        m_TargetAssemblyTypeName: WormSpawner, Assembly-CSharp
+        m_MethodName: SpawnWorm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -498,6 +498,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 954284074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &746498266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746498267}
+  m_Layer: 0
+  m_Name: Worm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746498267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746498266}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.69879, y: -2.46472, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756711463
 GameObject:
@@ -802,6 +833,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileContainer: {fileID: 1051078743}
   hexPrefab: {fileID: 5738394173026089439, guid: bda0f0391e5fac54e99d632cabd8e4a0, type: 3}
+  WormContainer: {fileID: 746498267}
+  wormPrefab: {fileID: 5028656816137249169, guid: 40070d0b44af6b846b73d73eadf80661, type: 3}
 --- !u!114 &840560671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,6 +892,37 @@ MonoBehaviour:
   - {fileID: 1487281698}
   - {fileID: 2123336094}
   - {fileID: 631050974}
+--- !u!1 &855121060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855121061}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855121061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855121060}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 540, y: 1114, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945702620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1325530809}
   m_Layer: 0
-  m_Name: Worm
+  m_Name: Listing Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1265,5 +1329,7 @@ SceneRoots:
   - {fileID: 945702624}
   - {fileID: 205347468}
   - {fileID: 1051078743}
+  - {fileID: 746498267}
   - {fileID: 1325530809}
   - {fileID: 954284074}
+  - {fileID: 855121061}

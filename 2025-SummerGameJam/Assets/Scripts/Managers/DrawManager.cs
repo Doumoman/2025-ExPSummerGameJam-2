@@ -86,7 +86,12 @@ public class DrawManager : MonoBehaviour
 
     public void RefreshWorm()
     {
+        RemoveWorm();
+        
         var _worms = InGameManager.Instance._worms;
+
+        BoardCell[] cells = FindObjectsByType<BoardCell>(FindObjectsSortMode.None);
+        Debug.Log($"Ã£Àº {cells.Length}");
         
         for (int i = 0; i < 9; i++)
         {
@@ -95,10 +100,19 @@ public class DrawManager : MonoBehaviour
                 float spawnX = i % 2 == 0 ? (j - centerCol) *  Mathf.Sqrt(3) / 2f * hexSize : (j - centerCol + 0.5f) * Mathf.Sqrt(3) / 2f * hexSize;
                 float SpawnY = (i - centerRow) * 0.75f * hexSize;
                 Vector2 spawnPos = new Vector2(spawnX, SpawnY);
-                
-                if (_worms[i, j] == eWormType.None)
+
+                foreach (var cell in cells)
                 {
-                    GameObject obj = Instantiate(wormPrefab, spawnPos, Quaternion.identity, TileContainer);
+                    if (cell.x == j && cell.y == i)
+                    {
+                        cell.bIsOccupied = _worms[i, j] != null;
+                    }
+                }
+                
+                if (_worms[i, j] != null)
+                {
+                    GameObject obj = Instantiate(wormPrefab, spawnPos, Quaternion.identity, WormContainer);
+                    obj.GetComponent<Worm>().Initialize(_worms[i, j]);
                     
                 }
             }
@@ -115,20 +129,9 @@ public class DrawManager : MonoBehaviour
 
     void RemoveWorm()
     {
-    }
-    
-    void ApplyMapImage(eBeehiveType beehiveType)
-    {
-        switch (beehiveType)
+        foreach (Transform child in WormContainer)
         {
-            case eBeehiveType.Red:
-                break;
-            case eBeehiveType.Blue:
-                break;
-            case eBeehiveType.Black:
-                break;
-            case eBeehiveType.Normal:
-                break;
+            Destroy(child.gameObject);
         }
     }
 }

@@ -53,7 +53,7 @@ public class InGameManager : MonoBehaviour
     private List<GameObject> _lightings = new List<GameObject>();
     
     public eBeehiveType[,] _beeHive = new eBeehiveType[9, 9]; // color 저장
-    public eWormType[,] _worms = new eWormType[9, 9]; // 애벌레 저장 (타입별로 다르게)
+    public WormInfo[,] _worms = new WormInfo[9, 9]; // 애벌레 저장 (타입별로 다르게)
 
     private int[] _colorNum = { 20, 20, 20, 20 };
 
@@ -141,14 +141,77 @@ public class InGameManager : MonoBehaviour
                 BoardCell cell = obj.GetComponent<BoardCell>();
                 cell.bIsOccupied = true;
 
-                InGameManager.Instance._worms[cell.x, cell.y] = Worm.WormType;
+                InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
+            DrawManager.Instance.RefreshWorm();
+            Destroy(Worm.gameObject);
+        }
+        
+        var result = GetLines();
+        Debug.Log($"총 {result.count}개의 WormInfo가 존재합니다.");
+        foreach (var pos in result.coords)
+        {
+            Debug.Log($"좌표: ({pos.x}, {pos.y})");
+            InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         DrawManager.Instance.RefreshWorm();
-        
-        // TODO
-        // 1자가 생성되었는지 확인
     }
+
+    (int count, HashSet<Vector2Int> coords) GetLines()
+    {
+        int count = 0;
+        HexAllLines hal = new HexAllLines();
+        var lines = hal.GetAllLines();
+        HashSet<Vector2Int> Vectors = new HashSet<Vector2Int>();
+        for (int i = 0; i < lines.Count; i++)
+        {
+            bool bIsLine = true;
+            List<Vector2Int> TVectors = new List<Vector2Int>();
+            for (int j = 0; j < lines[i].Count; j++)
+            {
+                if (_worms[lines[i][j].x, lines[i][j].y] == null)
+                {
+                    bIsLine = false;
+                }
+                else
+                {
+                    TVectors.Add(lines[i][j]);
+                }
+            }
+
+            if (bIsLine)
+            {
+                count++;
+                foreach (var TVector in TVectors)
+                {
+                    Vectors.Add(TVector);
+                }
+            }
+        }
+
+        return (count, Vectors);
+    }
+    
+    public (int count, List<Vector2Int> coords) GetNonNullWorms()
+    {
+        var coords = new List<Vector2Int>();
+        int rows = _worms.GetLength(0);
+        int cols = _worms.GetLength(1);
+
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                if (_worms[r, c] != null)
+                {
+                    coords.Add(new Vector2Int(r, c)); // (row, col)
+                }
+            }
+        }
+
+        return (coords.Count, coords);
+    }
+    
     
     void Noki(int x, int y)
     {
