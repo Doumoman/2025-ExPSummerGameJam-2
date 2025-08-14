@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/BoardCell.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/HexBoardFromTilemap.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/HexOffset.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/HexaTile/HexaShape.cs" charset="x-windows-949" />
+    <file url="PROJECT" charset="x-windows-949" />
+  </component>
+</project>
