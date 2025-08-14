@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 7906001768642231906, guid: 39281c90a17126141a4be7a27d9dc893, type: 3}
   price: 7
   itemEffect: "\uD134 \uD69F\uC218\uAC00 \uC99D\uAC00"
+  itemIndex: 11
