@@ -3566,6 +3566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTurns: 0
   startRerolls: 3
+  autoLoadFromPrefs: 1
+  startAtNextAfterLoad: 1
   firstStageIndex: 1
   rowCellPoint: 5
   remainTurnScore: 2

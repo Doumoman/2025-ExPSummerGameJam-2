@@ -12,13 +12,31 @@ public class ScoreManager : MonoBehaviour
         if (Instance && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        BuildStageMap();
     }
     #endregion
+    const string PP_HIGHEST_CLEARED_STAGE = "HighestClearedStage";
+
+    [Header("Goal Formula Params (Goal = ceil((a*b^(n-c) + s - a*b^(1-c)) * 10))")]
+    [SerializeField] float a = 50f;
+    [SerializeField] float b = 1.15f;
+    [SerializeField] float c = 1f;
+    [SerializeField] float s = 0f;
+
+    [Header("Fixed Stage Settings")]
+    [SerializeField] int fixedStageTurns = 20;
 
     [Header("initial set")]
     [SerializeField] int startTurns = 0;
     [SerializeField] int startRerolls = 3;
+
+    [Header("Progress Load Options")]
+    [Tooltip("게임 실행 시 PlayerPrefs에서 진행도를 자동으로 불러올지 여부")]
+    [SerializeField] bool autoLoadFromPrefs = true;
+
+    [Tooltip("저장된 '최고 클리어 스테이지'의 다음 스테이지부터 시작할지 여부 (true면 saved+1, false면 saved)")]
+    [SerializeField] bool startAtNextAfterLoad = true;
+
+    [Tooltip("로그라이크 시작 스테이지 인덱스(최초 시작/리셋 시 기준)")]
     [SerializeField] int firstStageIndex = 1;
 
     [Header("Row remove score multiply")]
@@ -33,18 +51,14 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int combo3Bonus = 50;
     [SerializeField] int combo4PlusBonus = 100;
 
-    /* ───────── 단일 스테이지 테이블 ───────── */
-    [Serializable]
-    public class StageConfig
+    int ComputeStageGoal(int stageIndex)
     {
-        public int stageIndex;
-        public int turns;
-        public int goalScore;
+        // stageIndex = n
+        float x = a * Mathf.Pow(b, stageIndex - c) + s - a * Mathf.Pow(b, 1f - c);
+        // 소수점 첫째자리 올림 후 *10 효과 == ceil(x * 10)
+        int goal = Mathf.CeilToInt(x * 10f);
+        return Mathf.Max(0, goal);
     }
-
-    [Header("Stage Table (Turns + Goal)")]
-    [SerializeField] List<StageConfig> stageTable = new();   // 인스펙터에서 관리
-    Dictionary<int, StageConfig> stageMap = new();           // 런타임 조회 캐시
 
     /* ───────── 상태 ───────── */
     public int CurrentStage { get; private set; } = -1;
@@ -74,23 +88,17 @@ public class ScoreManager : MonoBehaviour
     {
         Rerolls = startRerolls;
         Turns = startTurns;
+
+        if (autoLoadFromPrefs)
+        {
+            StartFromSavedProgress(resetRerolls: true, startAtNext: startAtNextAfterLoad);
+            return; // 여기서 시작하면 초기 이벤트들도 StartStage 안에서 쏴줌
+        }
+
         FireAllEvents();
     }
 
-    void BuildStageMap()
-    {
-        stageMap.Clear();
-        foreach (var cfg in stageTable)
-        {
-            if (cfg == null) continue;
-            stageMap[cfg.stageIndex] = new StageConfig
-            {
-                stageIndex = cfg.stageIndex,
-                turns = Mathf.Max(0, cfg.turns),
-                goalScore = Mathf.Max(0, cfg.goalScore)
-            };
-        }
-    }
+    
 
     void FireAllEvents()
     {
@@ -102,34 +110,24 @@ public class ScoreManager : MonoBehaviour
     /* ========================= 스테이지 제어 ========================= */
 
     // 인스펙터 외에 런타임에서도 수정 가능
-    public void SetStageConfig(int stageIndex, int turns, int goalScore)
-    {
-        var cfg = new StageConfig { stageIndex = stageIndex, turns = Mathf.Max(0, turns), goalScore = Mathf.Max(0, goalScore) };
-        stageMap[stageIndex] = cfg;
-
-        int idx = stageTable.FindIndex(s => s.stageIndex == stageIndex);
-        if (idx >= 0) stageTable[idx] = cfg;
-        else stageTable.Add(cfg);
-    }
+    
 
     public void StartStage(int stageIndex, bool resetRerolls = false)
     {
-        BuildStageMap(); // 인스펙터 수정 반영
         CurrentStage = stageIndex;
 
-        StageConfig cfg;
-        if (!stageMap.TryGetValue(stageIndex, out cfg))
-            cfg = new StageConfig { stageIndex = stageIndex, turns = startTurns, goalScore = 0 };
-
-        StageTotalTurns = cfg.turns;
-        CurrentStageGoal = cfg.goalScore;
+        // 목표 스코어 자동 계산
+        CurrentStageGoal = ComputeStageGoal(stageIndex);
         stageCleared = false;
 
         /* 스테이지 시작 시 점수 초기화 */
         Score = 0;
         OnScoreChanged?.Invoke(Score);
 
+        // 턴 수는 고정값 사용
+        StageTotalTurns = fixedStageTurns;
         Turns = StageTotalTurns;
+
         if (resetRerolls) Rerolls = startRerolls;
 
         OnTurnChanged?.Invoke(Turns);
@@ -142,7 +140,42 @@ public class ScoreManager : MonoBehaviour
         onStageEnded?.Invoke();
         if (shopUIPanel) shopUIPanel.SetActive(true); // 상점 오픈
     }
+    /* ========================= 진행도 저장/로드 API ========================= */
 
+    /// <summary> 스테이지 클리어 시 최고 클리어 스테이지를 PlayerPrefs에 저장 </summary>
+    void SaveStageClearProgress()
+    {
+        // 지금까지 저장된 최고 클리어 스테이지
+        int prev = PlayerPrefs.GetInt(PP_HIGHEST_CLEARED_STAGE, firstStageIndex - 1);
+        int next = Mathf.Max(prev, CurrentStage);
+        PlayerPrefs.SetInt(PP_HIGHEST_CLEARED_STAGE, next);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary> 저장된 최고 클리어 스테이지 읽기 (없으면 firstStageIndex-1 반환) </summary>
+    public int GetSavedClearedStage()
+    {
+        return PlayerPrefs.GetInt(PP_HIGHEST_CLEARED_STAGE, firstStageIndex - 1);
+    }
+
+    /// <summary> 진행도 초기화(디버그/테스트용) </summary>
+    public void ResetSavedProgress()
+    {
+        PlayerPrefs.DeleteKey(PP_HIGHEST_CLEARED_STAGE);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// 저장된 진행도로 시작. startAtNext=true면 (저장값+1)부터, false면 저장값부터 시작.
+    /// 저장값이 없거나 firstStageIndex보다 작으면 firstStageIndex로 보정.
+    /// </summary>
+    public void StartFromSavedProgress(bool resetRerolls = true, bool startAtNext = true)
+    {
+        int saved = GetSavedClearedStage(); // 예: 처음엔 firstStageIndex-1
+        int target = startAtNext ? (saved + 1) : saved;
+        target = Mathf.Max(firstStageIndex, target);
+        StartStage(target, resetRerolls);
+    }
     /* ========================= 턴/점수 API ========================= */
 
     public void EndTurn()
@@ -254,6 +287,9 @@ public class ScoreManager : MonoBehaviour
         // 코인 보너스(남은 턴 수만큼)
         if (Turns > 0)
             CoinManager.Instance?.AddCoin(Turns);
+
+        SaveStageClearProgress(); // 스테이지 저장
+        CoinManager.Instance?.SaveCoin(); // 코인 저장
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
         EndStage();
@@ -290,6 +326,7 @@ public class ScoreManager : MonoBehaviour
 
         // 2) 스테이지를 처음부터 시작(점수는 StartStage 내부에서 0으로 초기화됨)
         StartStage(firstStageIndex, resetRerolls);
+        ResetSavedProgress();
     }
     /* ========== Getter ========== */
     public int GetTurn() => Turns;
