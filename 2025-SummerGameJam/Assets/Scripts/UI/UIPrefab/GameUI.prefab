@@ -854,7 +854,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8617766780771439744}
-  - component: {fileID: 270661985340178451}
   - component: {fileID: 874497418289627063}
   m_Layer: 5
   m_Name: GameUI
@@ -889,19 +888,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &270661985340178451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7251147990158596861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06fa3971816470247a4178d0e395aaf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popUpUi: {fileID: 0}
 --- !u!114 &874497418289627063
 MonoBehaviour:
   m_ObjectHideFlags: 0

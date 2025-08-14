@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DebugGameUI : MonoBehaviour
+public class GameListener : MonoBehaviour
 {
     [Header("Texts (TMP)")]
     [SerializeField] TextMeshProUGUI coinText;

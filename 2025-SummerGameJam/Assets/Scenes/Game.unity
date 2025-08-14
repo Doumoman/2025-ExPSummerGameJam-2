@@ -3564,39 +3564,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16540459faad9b14e8d6a23a65de9a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: 50
+  b: 1.15
+  c: 1
+  s: 10
+  fixedStageTurns: 20
   startTurns: 0
   startRerolls: 3
   autoLoadFromPrefs: 1
   startAtNextAfterLoad: 1
   firstStageIndex: 1
-  rowCellPoint: 5
+  rowCellPoint: 2
   remainTurnScore: 2
   combo1Bonus: 10
   combo2Bonus: 25
   combo3Bonus: 50
   combo4PlusBonus: 100
-  stageTable:
-  - stageIndex: 1
-    turns: 5
-    goalScore: 1000
-  - stageIndex: 2
-    turns: 10
-    goalScore: 2000
-  - stageIndex: 3
-    turns: 10
-    goalScore: 3000
-  - stageIndex: 4
-    turns: 10
-    goalScore: 4000
-  - stageIndex: 5
-    turns: 10
-    goalScore: 5000
-  - stageIndex: 6
-    turns: 10
-    goalScore: 6000
-  - stageIndex: 7
-    turns: 10
-    goalScore: 7000
   shopUIPanel: {fileID: 249593664}
   onStageEnded:
     m_PersistentCalls:
