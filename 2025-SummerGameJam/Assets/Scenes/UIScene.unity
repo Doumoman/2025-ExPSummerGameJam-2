@@ -1221,6 +1221,10 @@ PrefabInstance:
       propertyPath: coin
       value: 
       objectReference: {fileID: 926744228}
+    - target: {fileID: 4936279373407286500, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5898361963990676445, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_LocalPosition.x
       value: 527.8
@@ -1258,6 +1262,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5898361963990676445, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
@@ -2176,8 +2200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inven: {fileID: 1589144574}
-  myItem: 0
   items: []
+  myItem: 0
 --- !u!4 &2147217235
 Transform:
   m_ObjectHideFlags: 0
