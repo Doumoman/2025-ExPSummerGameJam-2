@@ -1199,7 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1996822227903291562, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2228550207548077696, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2199,6 +2199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c7ed2b5a496be4da110fe9376d265d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capacity: 5
   inven: {fileID: 1589144574}
   items: []
   myItem: 0
