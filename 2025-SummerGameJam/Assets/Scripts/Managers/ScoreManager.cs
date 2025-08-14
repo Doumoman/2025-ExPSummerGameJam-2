@@ -194,6 +194,10 @@ public class ScoreManager : MonoBehaviour
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         Score += gain;
         OnScoreChanged?.Invoke(Score);
+
+        // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
+        CoinManager.Instance?.AddCoin(rowsCleared);
+        EndTurn();
         CheckStageGoal();
         return gain;
     }
@@ -210,6 +214,9 @@ public class ScoreManager : MonoBehaviour
         int bonus = Mathf.RoundToInt(lastGain * (addPercent / 100f));
         Score += bonus;
         OnScoreChanged?.Invoke(Score);
+
+        // 콤보 카운트만큼 코인 추가
+        CoinManager.Instance?.AddCoin(comboCount);
         CheckStageGoal();
         return bonus;
     }
@@ -235,7 +242,9 @@ public class ScoreManager : MonoBehaviour
             Score += Turns * remainTurnScore;
             OnScoreChanged?.Invoke(Score);
         }
-
+        // 코인 보너스(남은 턴 수만큼)
+        if (Turns > 0)
+            CoinManager.Instance?.AddCoin(Turns);
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
         EndStage();
@@ -277,4 +286,5 @@ public class ScoreManager : MonoBehaviour
     public int GetReroll() => Rerolls;
     public int GetStageGoal() => CurrentStageGoal;
     public int GetStageTotalTurns() => StageTotalTurns;
+    public int GetCoin() => CoinManager.Instance ? CoinManager.Instance.GetCoin() : 0;
 }

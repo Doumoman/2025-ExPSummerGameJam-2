@@ -5,6 +5,7 @@ using TMPro;
 public class DebugGameUI : MonoBehaviour
 {
     [Header("Texts (TMP)")]
+    [SerializeField] TextMeshProUGUI coinText;
     [SerializeField] TextMeshProUGUI stageText;
     [SerializeField] TextMeshProUGUI turnText;
     [SerializeField] TextMeshProUGUI rerollText;
@@ -30,7 +31,10 @@ public class DebugGameUI : MonoBehaviour
     [SerializeField] int cellsPerRow = 10;
 
     ScoreManager SM => ScoreManager.Instance;
-
+    private void Update()
+    {
+        RefreshTexts();
+    }
     void OnEnable()
     {
         if (turnButton) turnButton.onClick.AddListener(OnClickTurn);
@@ -138,5 +142,6 @@ public class DebugGameUI : MonoBehaviour
         if (rerollText) rerollText.text = $"Reroll\n{SM.GetReroll()}";
         if (goalScoreText) goalScoreText.text = $"GoalScore\n{SM.GetStageGoal()}";
         if (currentScoreText) currentScoreText.text = $"CurrentScore\n{SM.GetScore()}";
+        if (coinText) coinText.text = $"Coin\n{SM.GetCoin()}";
     }
 }
