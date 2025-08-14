@@ -7,4 +7,6 @@ public class Item : ScriptableObject
     public Sprite icon;
     public int price;
     public string itemEffect;
+    [Tooltip("아이템의 고유 인덱스")]
+    public int itemIndex;
 }
