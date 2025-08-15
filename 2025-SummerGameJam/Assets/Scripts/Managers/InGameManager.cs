@@ -148,6 +148,9 @@ public class InGameManager : MonoBehaviour
         return true;
     }
 
+    private int OddPlacement = 0;
+    private int EvenPlacement = 0;
+    
     public void PlaceWorm(WormTile Worm)
     {
         int DamageSum = 0;
@@ -161,7 +164,29 @@ public class InGameManager : MonoBehaviour
                 InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
             DrawManager.Instance.RefreshWorm();
-            DamageSum += ScoreManager.Instance.AddPlacementScore(Worm.transform.childCount);
+            int Damage = Worm.transform.childCount;
+            if (Damage / 2 == 0)
+            {
+                EvenPlacement = 0;
+                OddPlacement++;
+                if (OddPlacement > 2 && HasItem(eItemType.LikeOddPosition) > 0)
+                {
+                    Damage += 1 + OddPlacement * 2 * HasItem(eItemType.LikeOddPosition);
+                }
+            }
+            else
+            {
+                OddPlacement = 0;
+                EvenPlacement++;
+                if (EvenPlacement > 2 && HasItem(eItemType.LikeEvenPosition) > 0)
+                {
+                    Damage += 1 + EvenPlacement * 2 * HasItem(eItemType.LikeEvenPosition);
+                }
+            }
+            Damage *= (1 + HasItem(eItemType.PositionScoreUp));
+            DamageSum += Damage;
+            
+            ScoreManager.Instance.AddPlacementScore(Damage);
             Destroy(Worm.gameObject);
             OnWormPlacedOnce();
         }
@@ -172,7 +197,7 @@ public class InGameManager : MonoBehaviour
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         
-        DamageSum += ScoreManager.Instance.AddRowClearScore(result.count, result.coords.Count);
+        DamageSum += ScoreManager.Instance.AddRowClearScore(result.coords.Count, result.count);
         
         GameManager.Inst.ShowDamage(DamageSum);
         
@@ -260,8 +285,63 @@ public class InGameManager : MonoBehaviour
         }
     }
     // 새로운 맵 생성
-    void RefreshMap()
+    public void RefreshMap()
     {
-        OnMapChanged?.Invoke();
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                _worms[i, j] = null;
+            }
+        }
+        
+        DrawManager.Instance.RefreshWorm();
+    }
+    
+    // ============ 아이템 관련 코드 =============
+    
+    List<(eItemType Type, int Count)> _itemList = new List<(eItemType, int)>();
+
+    public bool CanGetItem()
+    {
+        int itemNum = 0;
+        foreach (var item in _itemList)
+        {
+            itemNum += item.Count;
+            if (itemNum >= 5)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void GetItem(eItemType itemType)
+    {
+        for (int i = 0; i < _itemList.Count; i++)
+        {
+            if (_itemList[i].Type == itemType)
+            {
+                _itemList[i] = (itemType, _itemList[i].Count + 1);
+                break;
+            }
+        }
+        _itemList.Add((itemType, 1));
+        
+        Debug.Log($"{itemType} 레벨 1만큼 증가");
+    }
+
+    public int HasItem(eItemType itemType)
+    {
+        foreach (var item in _itemList)
+        {
+            if (item.Type == itemType)
+            {
+                return item.Count;
+            }
+        }
+
+        return 0;
     }
 }
