@@ -257,11 +257,11 @@ public class ScoreManager : MonoBehaviour
 
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         gain *= (1 + InGameManager.Instance.HasItem(eItemType.EreaseScoreUp));
-        if (cellsPerRow / 2 == 0 && InGameManager.Instance.HasItem(eItemType.LikeEvenErease) > 0)
+        if (cellsPerRow % 2 == 0 && InGameManager.Instance.HasItem(eItemType.LikeEvenErease) > 0)
         {
             gain *= 3 * InGameManager.Instance.HasItem(eItemType.LikeEvenErease);
         }
-        if (cellsPerRow / 2 == 1 && InGameManager.Instance.HasItem(eItemType.LikeOddErease) > 0)
+        if (cellsPerRow % 2 == 1 && InGameManager.Instance.HasItem(eItemType.LikeOddErease) > 0)
         {
             gain *= 3 * InGameManager.Instance.HasItem(eItemType.LikeOddErease);
         }
