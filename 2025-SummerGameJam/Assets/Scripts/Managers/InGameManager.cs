@@ -134,6 +134,7 @@ public class InGameManager : MonoBehaviour
 
     public void PlaceWorm(WormTile Worm)
     {
+        int DamageSum = 0;
         if (Worm.transform.childCount == _lightings.Count)
         {
             foreach (var obj in _lightings)
@@ -144,7 +145,7 @@ public class InGameManager : MonoBehaviour
                 InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
             DrawManager.Instance.RefreshWorm();
-            GameManager.Inst.GetBatchScore(Worm.transform.childCount);
+            DamageSum += GameManager.Inst.GetBatchScore(Worm.transform.childCount);
             Destroy(Worm.gameObject);
         }
         
@@ -154,7 +155,9 @@ public class InGameManager : MonoBehaviour
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         
-        GameManager.Inst.GetDeleteScore(result.count, result.coords.Count);
+        DamageSum += GameManager.Inst.GetDeleteScore(result.count, result.coords.Count);
+        
+        GameManager.Inst.ShowDamage(DamageSum);
         
         DrawManager.Instance.RefreshWorm();
     }

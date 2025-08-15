@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
@@ -54,27 +55,29 @@ public class GameManager : MonoBehaviour
     public static bool isStage2Cleared = false;
     public static bool isStage3Cleared = false;
 
+    public GameObject DamagePrefab;
+
     
     public int Score = 0;
 
-    public void GetBatchScore(int kan)
+    public int GetBatchScore(int kan)
     {
         Score += kan;
-        Debug.Log(kan);
-        UpdateScore();
+        return kan;
     }
-    public void GetDeleteScore(int line, int kan)
+    public int GetDeleteScore(int line, int kan)
     {
         Score += line * kan * 5;
-        Debug.Log(line * kan * 5);
-        UpdateScore();
+        return line * kan * 5;
     }
     private void Start()
     {
         Application.targetFrameRate = 60;
     }
-    private void UpdateScore()
+    public void ShowDamage(int damage)
     {
-        Debug.Log($"현재 점수 : {Score}");
+        Canvas canvas = FindAnyObjectByType<Canvas>();
+        GameObject obj = Instantiate(DamagePrefab, canvas.transform);
+        obj.GetComponent<DamageEffect>().ShowDamage(damage);
     }
 }
