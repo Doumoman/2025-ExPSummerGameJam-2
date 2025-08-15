@@ -15,6 +15,7 @@ public class GameUIText : MonoBehaviour
         ScoreManager.Instance.OnScoreChanged += OnScoreChanged;
         ScoreManager.Instance.OnTurnChanged += OnTurnChanged;
         ScoreManager.Instance.OnRerollChanged += OnRerollChanaged;
+        ScoreManager.Instance.OnGoalScoreChanged += OnGoalScoreChanged;
 
     }
 
@@ -27,6 +28,7 @@ public class GameUIText : MonoBehaviour
 
     void OnScoreChanged(int newScore)
     {
+        Debug.Log(newScore);
         ScoreText.SetText(newScore.ToString());
     }
 
@@ -37,6 +39,13 @@ public class GameUIText : MonoBehaviour
 
     void OnRerollChanaged(int newReroll)
     {
+        Debug.Log(newReroll);
         reroll.SetText(newReroll.ToString());
+    }
+
+    void OnGoalScoreChanged(int newGoalScore)
+    {
+        Debug.Log(newGoalScore);
+        pointScore.SetText(newGoalScore.ToString());
     }
 }
