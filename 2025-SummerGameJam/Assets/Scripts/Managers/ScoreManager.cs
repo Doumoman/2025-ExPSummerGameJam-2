@@ -88,6 +88,7 @@ public class ScoreManager : MonoBehaviour
     [Header("When Stage Defeated → Defeat Panel")]
     [SerializeField] GameObject defeatPanel;       // 패배 패널
     [SerializeField] UnityEvent onStageDefeated;   // 패배 시 훅
+    
     void Start()
     {
         Rerolls = startRerolls;
@@ -156,6 +157,12 @@ public class ScoreManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void UpdateScore(int newScore)
+    {
+        Score = newScore;
+        OnScoreChanged?.Invoke(newScore);
+    }
+    
     /// <summary> 저장된 최고 클리어 스테이지 읽기 (없으면 firstStageIndex-1 반환) </summary>
     public int GetSavedClearedStage()
     {
