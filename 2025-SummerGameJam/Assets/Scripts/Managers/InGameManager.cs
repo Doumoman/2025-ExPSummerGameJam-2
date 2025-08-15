@@ -148,7 +148,7 @@ public class InGameManager : MonoBehaviour
                 InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
             DrawManager.Instance.RefreshWorm();
-            DamageSum += GameManager.Inst.GetBatchScore(Worm.transform.childCount);
+            DamageSum += ScoreManager.Instance.AddPlacementScore(Worm.transform.childCount);
             Destroy(Worm.gameObject);
         }
         
@@ -158,7 +158,7 @@ public class InGameManager : MonoBehaviour
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         
-        DamageSum += GameManager.Inst.GetDeleteScore(result.count, result.coords.Count);
+        DamageSum += ScoreManager.Instance.AddRowClearScore(result.count, result.coords.Count);
         
         GameManager.Inst.ShowDamage(DamageSum);
         

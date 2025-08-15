@@ -80,6 +80,6 @@ public class GameManager : MonoBehaviour
         Canvas canvas = FindAnyObjectByType<Canvas>();
         GameObject obj = Instantiate(DamagePrefab, canvas.transform);
         obj.GetComponent<DamageEffect>().ShowDamage(damage);
-        ScoreManager.Instance.UpdateScore(Score);
+        //ScoreManager.Instance.UpdateScore(Score);
     }
 }

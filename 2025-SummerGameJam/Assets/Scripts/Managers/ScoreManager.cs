@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour
         if (Instance && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
     }
     #endregion
     const string PP_HIGHEST_CLEARED_STAGE = "HighestClearedStage";
@@ -105,7 +106,6 @@ public class ScoreManager : MonoBehaviour
     }
 
     
-
     void FireAllEvents()
     {
         OnScoreChanged?.Invoke(Score);
@@ -231,7 +231,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (placedTileCount <= 0) return 0;
 
-        SoundManager.Instance.EffectSoundOn("TileV1");
+        //SoundManager.Instance.EffectSoundOn("TileV1");
 
         Score += placedTileCount;
         OnScoreChanged?.Invoke(Score);
@@ -245,7 +245,7 @@ public class ScoreManager : MonoBehaviour
         Score += gain;
         OnScoreChanged?.Invoke(Score);
 
-        SoundManager.Instance.EffectSoundOn("Transformation V1");
+        //SoundManager.Instance.EffectSoundOn("Transformation V1");
 
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
@@ -294,6 +294,7 @@ public class ScoreManager : MonoBehaviour
 
     void StageClear()
     {
+        Debug.Log("스테이지 클리어!");
         stageCleared = true;
 
         // 남은 턴 보너스: 남은턴 × remainTurnScore
