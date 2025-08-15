@@ -57,13 +57,13 @@ public class WormSpawner : MonoBehaviour
     /// (턴은 소모하지 않음)
     /// </summary>
     /// 
-    public bool TryRerollSpawn()
+    public void TryRerollSpawn()
     {
-        if (SM == null) return false;
+        if (SM == null) return ;
         if (SM.GetReroll() <= 0)
         {
             Debug.Log("[WormSpawner] Reroll failed: no rerolls left.");
-            return false;
+            return ;
         }
 
         // 리롤 1 소모
@@ -74,7 +74,6 @@ public class WormSpawner : MonoBehaviour
 
         // 새 3마리로 갱신(턴 소모 X)
         SpawnNewSet(unconditional: true);
-        return true;
     }
     /// <summary>
     /// 특정 타입의 가중치를 변경 (1 이상)

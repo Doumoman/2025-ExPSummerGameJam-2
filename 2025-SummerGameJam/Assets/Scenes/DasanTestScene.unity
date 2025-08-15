@@ -283,7 +283,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 840560674}
         m_TargetAssemblyTypeName: WormSpawner, Assembly-CSharp
-        m_MethodName: SpawnWorm
+        m_MethodName: TryRerollSpawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1010,6 +1010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fb462baaaaf02438d78a97351b0bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementsPerTurn: 3
 --- !u!4 &840560672
 Transform:
   m_ObjectHideFlags: 0
@@ -2672,7 +2673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 848228086609482020, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3084004405639500850, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
       propertyPath: m_SizeDelta.y
