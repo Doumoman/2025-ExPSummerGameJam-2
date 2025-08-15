@@ -11,7 +11,8 @@ public class WormTile : MonoBehaviour
     public GameObject WormPrefab;
 
     public WormInfo _wormInfo;
-    
+
+    public System.Action OnConsumed;
     public void Initialize(WormInfo wormInfo, Vector2 pos, eWormType type)
     {
         _wormInfo = wormInfo;
@@ -82,5 +83,12 @@ public class WormTile : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = zCoord; // Z 고정
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+    // 실제로 플레이어가 이 벌레를 사용(배치/소모)했을 때 호출
+    public void Consume()
+    {
+        // ... 사용 처리 로직 ...
+        OnConsumed?.Invoke(); // ★ 스포너에 "한 마리 사용" 알림
+        Destroy(gameObject);
     }
 }
