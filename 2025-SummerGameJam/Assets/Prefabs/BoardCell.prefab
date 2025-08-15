@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3678765582988093071}
   - component: {fileID: 5833132069082891190}
   - component: {fileID: 8519733684389066931}
-  - component: {fileID: -6340623130428097028}
+  - component: {fileID: 1003465751579760299}
   m_Layer: 6
   m_Name: BoardCell
   m_TagString: Untagged
@@ -103,8 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
---- !u!58 &-6340623130428097028
-CircleCollider2D:
+  bIsOccupied: 0
+--- !u!60 &1003465751579760299
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -138,4 +139,32 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5133333
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8933333, y: 1.0266666}
+    newSize: {x: 1, y: 0.8828125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.4466667, y: -0.27333334}
+      - {x: 0.4466667, y: 0.27333334}
+      - {x: 0.43333334, y: 0.29333335}
+      - {x: 0.38, y: 0.32666668}
+      - {x: 0.053333335, y: 0.5133333}
+      - {x: -0.046666667, y: 0.5133333}
+      - {x: -0.12666667, y: 0.47333336}
+      - {x: -0.41333336, y: 0.30666667}
+      - {x: -0.4466667, y: 0.26666668}
+      - {x: -0.4466667, y: -0.26666668}
+      - {x: -0.41333336, y: -0.30666667}
+      - {x: -0.12666667, y: -0.47333336}
+      - {x: -0.086666666, y: -0.5133333}
+      - {x: 0.08, y: -0.5133333}
+      - {x: 0.22, y: -0.42000002}
+      - {x: 0.33333334, y: -0.35333335}
+      - {x: 0.41333336, y: -0.31333333}
+  m_UseDelaunayMesh: 0

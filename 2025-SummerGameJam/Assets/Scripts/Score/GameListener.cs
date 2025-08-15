@@ -187,11 +187,11 @@ public class GameListener : MonoBehaviour
     void RefreshTexts()
     {
         if (SM == null) return;
-        if (stageText) stageText.text = $"Stage\n{SM.GetStage()}";
-        if (turnText) turnText.text = $"Turn\n{SM.GetTurn()}";
-        if (rerollText) rerollText.text = $"Reroll\n{SM.GetReroll()}";
-        if (goalScoreText) goalScoreText.text = $"GoalScore\n{SM.GetStageGoal()}";
-        if (currentScoreText) currentScoreText.text = $"CurrentScore\n{SM.GetScore()}";
-        if (coinText) coinText.text = $"Coin\n{SM.GetCoin()}";
+        if (stageText) stageText.text = $"{SM.GetStage()}";
+        if (turnText) turnText.text = $"{SM.GetTurn()}";
+        if (rerollText) rerollText.text = $"{SM.GetReroll()}";
+        if (goalScoreText) goalScoreText.text = $"{SM.GetStageGoal()}";
+        if (currentScoreText) currentScoreText.text = $"{SM.GetScore()}";
+        if (coinText) coinText.text = $"{SM.GetCoin()}";
     }
 }
