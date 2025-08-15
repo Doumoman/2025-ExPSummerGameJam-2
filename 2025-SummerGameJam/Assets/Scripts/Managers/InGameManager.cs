@@ -71,7 +71,7 @@ public class InGameManager : MonoBehaviour
         
         OnMapChanged?.Invoke();
 
-        _wormSpawner.SpawnWorm();
+        _wormSpawner.SpawnNewSet();
     }
     
     // ∏  √ ±‚»≠

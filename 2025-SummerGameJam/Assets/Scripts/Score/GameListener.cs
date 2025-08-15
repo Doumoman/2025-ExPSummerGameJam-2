@@ -23,14 +23,14 @@ public class GameListener : MonoBehaviour
     [SerializeField] Button addTurnButton;          // NEW: 턴 +1
     [SerializeField] Button restartRunButton; // 재시작 버튼
     [SerializeField] Button goShopFromClearButton; // 클리어 후 상점 UI 여는 버튼
-
+    [SerializeField] Button rerollButton;
     [Header("Stage Start (Inspector int)")]
     [Tooltip("Start Game 버튼으로 시작할 스테이지 인덱스")]
     [SerializeField] int stageToStart = 0;          // NEW: 인스펙터에서 지정
 
     [Header("Scoring Params")]
     [SerializeField] int cellsPerRow = 10;
-
+    [SerializeField] WormSpawner wormSpawner;
     ScoreManager SM => ScoreManager.Instance;
     private void Update()
     {
@@ -48,6 +48,7 @@ public class GameListener : MonoBehaviour
         if (addTurnButton) addTurnButton.onClick.AddListener(OnClickAddTurn); // NEW
         if (restartRunButton) restartRunButton.onClick.AddListener(OnClickRestartStage);
         if (goShopFromClearButton) goShopFromClearButton.onClick.AddListener(OnClickGoShopFromClear);
+        rerollButton.onClick.AddListener(() => wormSpawner.TryRerollSpawn());
         if (SM != null)
         {
             SM.OnScoreChanged += _ => RefreshTexts();
@@ -139,11 +140,11 @@ public class GameListener : MonoBehaviour
     void RefreshTexts()
     {
         if (SM == null) return;
-        if (stageText) stageText.text = $"Stage\n{SM.GetStage()}";
-        if (turnText) turnText.text = $"Turn\n{SM.GetTurn()}";
-        if (rerollText) rerollText.text = $"Reroll\n{SM.GetReroll()}";
-        if (goalScoreText) goalScoreText.text = $"GoalScore\n{SM.GetStageGoal()}";
-        if (currentScoreText) currentScoreText.text = $"CurrentScore\n{SM.GetScore()}";
-        if (coinText) coinText.text = $"Coin\n{SM.GetCoin()}";
+        if (stageText) stageText.text = $"{SM.GetStage()}";
+        if (turnText) turnText.text = $"{SM.GetTurn()}";
+        if (rerollText) rerollText.text = $"{SM.GetReroll()}";
+        if (goalScoreText) goalScoreText.text = $"{SM.GetStageGoal()}";
+        if (currentScoreText) currentScoreText.text = $"{SM.GetScore()}";
+        if (coinText) coinText.text = $"{SM.GetCoin()}";
     }
 }

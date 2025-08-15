@@ -52,7 +52,13 @@ public class DrawManager : MonoBehaviour
     private int centerRow = 4;
 
     private float hexSize = 1f;
+    bool suppressConsumeThisRefresh = false;
 
+    /// <summary>리롤 직전 WormSpawner가 호출: 이번 Refresh에서 '소비' 카운팅을 하지 않음</summary>
+    public void SuppressConsumeOnce()
+    {
+        suppressConsumeThisRefresh = true;
+    }
     void Initialize()
     {
         InGameManager.Instance.OnMapChanged += Build;
@@ -94,7 +100,7 @@ public class DrawManager : MonoBehaviour
         var _worms = InGameManager.Instance._worms;
 
         BoardCell[] cells = FindObjectsByType<BoardCell>(FindObjectsSortMode.None);
-        
+
         for (int i = 0; i < 9; i++)
         {
             for (int j = 0; j < 9; j++)
@@ -107,12 +113,15 @@ public class DrawManager : MonoBehaviour
                 {
                     if (cell.x == j && cell.y == i)
                     {
-                        bool bLastOccupied = cell.bIsOccupied;
+                        bool wasOccupied = cell.bIsOccupied;
                         cell.bIsOccupied = _worms[i, j] != null;
 
-                        if (bLastOccupied && cell.bIsOccupied == false)
+                        if (wasOccupied && !cell.bIsOccupied)
                         {
                             Instantiate(BlowPrefab, cell.transform.position, quaternion.identity, this.transform);
+
+                            // 벌레가 사라졌음을 알림 (3번만 호출되도록 WormSpawner 내부에서 제어)
+                            WormSpawner.NotifyWormConsumed();
                         }
                     }
                 }
