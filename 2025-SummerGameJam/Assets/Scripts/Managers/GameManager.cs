@@ -73,11 +73,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 60;
+        
     }
     public void ShowDamage(int damage)
     {
         Canvas canvas = FindAnyObjectByType<Canvas>();
         GameObject obj = Instantiate(DamagePrefab, canvas.transform);
         obj.GetComponent<DamageEffect>().ShowDamage(damage);
+        ScoreManager.Instance.UpdateScore(Score);
     }
 }

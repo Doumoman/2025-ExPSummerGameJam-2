@@ -3,30 +3,44 @@ using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
-    private static StageManager instance = null;
+    #region Singleton
+    private static StageManager _instance;
     public static StageManager Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                return null;
+                _instance = FindAnyObjectByType<StageManager>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("InGameManager");
+                    _instance = go.AddComponent<StageManager>();
+                }
             }
-            return instance;
+            return _instance;
         }
     }
-    private void Awake()
+
+    void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+            Initialize();
         }
-        else
+        else if (_instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
+
+    void Initialize()
+    {
+        
+    }
+    #endregion
 
     string currentScene = "";
      

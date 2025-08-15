@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d95aedc47ce89f4d8e77ef9564f00b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamagePrefab: {fileID: 6684121251000755154, guid: e99239107d22627478d8e4d08d5839c8, type: 3}
   Score: 0
 --- !u!4 &1274693204
 Transform:

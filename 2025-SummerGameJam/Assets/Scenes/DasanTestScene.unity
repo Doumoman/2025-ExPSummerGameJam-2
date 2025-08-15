@@ -1317,6 +1317,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 945702624}
     m_Modifications:
+    - target: {fileID: 874497418289627063, guid: ee977fd64798a954a9f506e0d762013b, type: 3}
+      propertyPath: ScoreText
+      value: 
+      objectReference: {fileID: 1984624711}
     - target: {fileID: 1913527007504776557, guid: ee977fd64798a954a9f506e0d762013b, type: 3}
       propertyPath: m_text
       value: 2782
