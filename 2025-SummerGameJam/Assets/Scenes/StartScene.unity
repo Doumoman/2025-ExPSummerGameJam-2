@@ -136,6 +136,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 325742698}
+    - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 325742698}
@@ -144,8 +148,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StartBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SrartUiBtn, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1984579441555023489, guid: b2d9b3627f432824ca428c3dc989a1e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -569,6 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d95aedc47ce89f4d8e77ef9564f00b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamagePrefab: {fileID: 0}
   Score: 0
 --- !u!4 &1274693204
 Transform:
