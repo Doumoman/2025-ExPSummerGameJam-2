@@ -30,20 +30,20 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int startRerolls = 3;
 
     [Header("Progress Load Options")]
-    [Tooltip("°ÔÀÓ ½ÇÇà ½Ã PlayerPrefs¿¡¼­ ÁøÇàµµ¸¦ ÀÚµ¿À¸·Î ºÒ·¯¿ÃÁö ¿©ºÎ")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ PlayerPrefsï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] bool autoLoadFromPrefs = true;
 
-    [Tooltip("ÀúÀåµÈ 'ÃÖ°í Å¬¸®¾î ½ºÅ×ÀÌÁö'ÀÇ ´ÙÀ½ ½ºÅ×ÀÌÁöºÎÅÍ ½ÃÀÛÇÒÁö ¿©ºÎ (true¸é saved+1, false¸é saved)")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ 'ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (trueï¿½ï¿½ saved+1, falseï¿½ï¿½ saved)")]
     [SerializeField] bool startAtNextAfterLoad = true;
 
-    [Tooltip("·Î±×¶óÀÌÅ© ½ÃÀÛ ½ºÅ×ÀÌÁö ÀÎµ¦½º(ÃÖÃÊ ½ÃÀÛ/¸®¼Â ½Ã ±âÁØ)")]
+    [Tooltip("ï¿½Î±×¶ï¿½ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)")]
     [SerializeField] int firstStageIndex = 1;
 
     [Header("Row remove score multiply")]
     [SerializeField] int rowCellPoint = 5;
 
     [Header("Remain Turn score multiply")]
-    [SerializeField] int remainTurnScore = 3;      // ³²Àº ÅÏ 1°³´ç Ãß°¡ Á¡¼ö
+    [SerializeField] int remainTurnScore = 3;      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     [Header("Combo Bonus(%)")]
     [SerializeField] int combo1Bonus = 10;
@@ -55,12 +55,12 @@ public class ScoreManager : MonoBehaviour
     {
         // stageIndex = n
         float x = a * Mathf.Pow(b, stageIndex - c) + s - a * Mathf.Pow(b, 1f - c);
-        // ¼Ò¼öÁ¡ Ã¹Â°ÀÚ¸® ¿Ã¸² ÈÄ *10 È¿°ú == ceil(x * 10)
+        // ï¿½Ò¼ï¿½ï¿½ï¿½ Ã¹Â°ï¿½Ú¸ï¿½ ï¿½Ã¸ï¿½ ï¿½ï¿½ *10 È¿ï¿½ï¿½ == ceil(x * 10)
         int goal = Mathf.CeilToInt(x * 10f);
         return Mathf.Max(0, goal);
     }
 
-    /* ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ »óÅÂ ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     public int CurrentStage { get; private set; } = -1;
     public int StageTotalTurns { get; private set; }
     public int CurrentStageGoal { get; private set; }
@@ -70,7 +70,7 @@ public class ScoreManager : MonoBehaviour
     public int Turns { get; private set; }
     public int Rerolls { get; private set; }
 
-    /* ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ÀÌº¥Æ® ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     public event Action<int> OnGoalScoreChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnTurnChanged;
@@ -78,17 +78,17 @@ public class ScoreManager : MonoBehaviour
     public event Action<int, int> OnTurnStarted;
     public event Action<int, int> OnTurnEnded;
 
-    [Header("When Stage Cleared ¡æ Clear Panel")]
-    [SerializeField] GameObject clearPanel;        // ¡Ú Å¬¸®¾î ÆÐ³Î
-    [SerializeField] UnityEvent onStageCleared;    // ¡Ú Å¬¸®¾î ½Ã ÈÅ(È¿°úÀ½/¿¬Ãâ µî)
+    [Header("When Stage Cleared ï¿½ï¿½ Clear Panel")]
+    [SerializeField] GameObject clearPanel;        // ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+    [SerializeField] UnityEvent onStageCleared;    // ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½(È¿ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
 
     [Header("If Stage Cleared, shopPopup")]
     [SerializeField] GameObject shopUIPanel;
     [SerializeField] UnityEvent onStageEnded;
 
-    [Header("When Stage Defeated ¡æ Defeat Panel")]
-    [SerializeField] GameObject defeatPanel;       // ÆÐ¹è ÆÐ³Î
-    [SerializeField] UnityEvent onStageDefeated;   // ÆÐ¹è ½Ã ÈÅ
+    [Header("When Stage Defeated ï¿½ï¿½ Defeat Panel")]
+    [SerializeField] GameObject defeatPanel;       // ï¿½Ð¹ï¿½ ï¿½Ð³ï¿½
+    [SerializeField] UnityEvent onStageDefeated;   // ï¿½Ð¹ï¿½ ï¿½ï¿½ ï¿½ï¿½
     
     void Start()
     {
@@ -102,7 +102,7 @@ public class ScoreManager : MonoBehaviour
         if (autoLoadFromPrefs)
         {
             StartFromSavedProgress(resetRerolls: true, startAtNext: startAtNextAfterLoad);
-            return; // ¿©±â¼­ ½ÃÀÛÇÏ¸é ÃÊ±â ÀÌº¥Æ®µéµµ StartStage ¾È¿¡¼­ ½÷ÁÜ
+            return; // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ê±ï¿½ ï¿½Ìºï¿½Æ®ï¿½éµµ StartStage ï¿½È¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
         FireAllEvents();
@@ -117,28 +117,28 @@ public class ScoreManager : MonoBehaviour
         OnRerollChanged?.Invoke(Rerolls);
     }
 
-    /* ========================= ½ºÅ×ÀÌÁö Á¦¾î ========================= */
+    /* ========================= ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ========================= */
 
-    // ÀÎ½ºÆåÅÍ ¿Ü¿¡ ·±Å¸ÀÓ¿¡¼­µµ ¼öÁ¤ °¡´É
+    // ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ü¿ï¿½ ï¿½ï¿½Å¸ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     
 
     public void StartStage(int stageIndex, bool resetRerolls = false)
     {
         CurrentStage = stageIndex;
 
-        // ¸ñÇ¥ ½ºÄÚ¾î ÀÚµ¿ °è»ê
+        // ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½Ú¾ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½
         CurrentStageGoal = ComputeStageGoal(stageIndex);
         OnGoalScoreChanged?.Invoke(CurrentStageGoal);
         stageCleared = false;
 
-        /* ½ºÅ×ÀÌÁö ½ÃÀÛ ½Ã Á¡¼ö ÃÊ±âÈ­ */
+        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ */
         Score = 0;
         OnScoreChanged?.Invoke(Score);
         
-        // ¸Êµµ ÃÊ±âÈ­
+        // ï¿½Êµï¿½ ï¿½Ê±ï¿½È­
         InGameManager.Instance.RefreshMap();
 
-        // ÅÏ ¼ö´Â °íÁ¤°ª »ç¿ë
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         StageTotalTurns = fixedStageTurns;
         Turns = StageTotalTurns;
 
@@ -152,14 +152,14 @@ public class ScoreManager : MonoBehaviour
     public void EndStage()
     {
         onStageEnded?.Invoke();
-        if (shopUIPanel) shopUIPanel.SetActive(true); // »óÁ¡ ¿ÀÇÂ
+        if (shopUIPanel) shopUIPanel.SetActive(true); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-    /* ========================= ÁøÇàµµ ÀúÀå/·Îµå API ========================= */
+    /* ========================= ï¿½ï¿½ï¿½àµµ ï¿½ï¿½ï¿½ï¿½/ï¿½Îµï¿½ API ========================= */
 
-    /// <summary> ½ºÅ×ÀÌÁö Å¬¸®¾î ½Ã ÃÖ°í Å¬¸®¾î ½ºÅ×ÀÌÁö¸¦ PlayerPrefs¿¡ ÀúÀå </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PlayerPrefsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     void SaveStageClearProgress()
     {
-        // Áö±Ý±îÁö ÀúÀåµÈ ÃÖ°í Å¬¸®¾î ½ºÅ×ÀÌÁö
+        // ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int prev = PlayerPrefs.GetInt(PP_HIGHEST_CLEARED_STAGE, firstStageIndex - 1);
         int next = Mathf.Max(prev, CurrentStage);
         PlayerPrefs.SetInt(PP_HIGHEST_CLEARED_STAGE, next);
@@ -172,13 +172,13 @@ public class ScoreManager : MonoBehaviour
         OnScoreChanged?.Invoke(newScore);
     }
     
-    /// <summary> ÀúÀåµÈ ÃÖ°í Å¬¸®¾î ½ºÅ×ÀÌÁö ÀÐ±â (¾øÀ¸¸é firstStageIndex-1 ¹ÝÈ¯) </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ firstStageIndex-1 ï¿½ï¿½È¯) </summary>
     public int GetSavedClearedStage()
     {
         return PlayerPrefs.GetInt(PP_HIGHEST_CLEARED_STAGE, firstStageIndex - 1);
     }
 
-    /// <summary> ÁøÇàµµ ÃÊ±âÈ­(µð¹ö±×/Å×½ºÆ®¿ë) </summary>
+    /// <summary> ï¿½ï¿½ï¿½àµµ ï¿½Ê±ï¿½È­(ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½×½ï¿½Æ®ï¿½ï¿½) </summary>
     public void ResetSavedProgress()
     {
         PlayerPrefs.DeleteKey(PP_HIGHEST_CLEARED_STAGE);
@@ -186,21 +186,21 @@ public class ScoreManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀúÀåµÈ ÁøÇàµµ·Î ½ÃÀÛ. startAtNext=true¸é (ÀúÀå°ª+1)ºÎÅÍ, false¸é ÀúÀå°ªºÎÅÍ ½ÃÀÛ.
-    /// ÀúÀå°ªÀÌ ¾ø°Å³ª firstStageIndexº¸´Ù ÀÛÀ¸¸é firstStageIndex·Î º¸Á¤.
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. startAtNext=trueï¿½ï¿½ (ï¿½ï¿½ï¿½å°ª+1)ï¿½ï¿½ï¿½ï¿½, falseï¿½ï¿½ ï¿½ï¿½ï¿½å°ªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+    /// ï¿½ï¿½ï¿½å°ªï¿½ï¿½ ï¿½ï¿½ï¿½Å³ï¿½ firstStageIndexï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ firstStageIndexï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     /// </summary>
     public void StartFromSavedProgress(bool resetRerolls = true, bool startAtNext = true)
     {
-        int saved = GetSavedClearedStage(); // ¿¹: Ã³À½¿£ firstStageIndex-1
+        int saved = GetSavedClearedStage(); // ï¿½ï¿½: Ã³ï¿½ï¿½ï¿½ï¿½ firstStageIndex-1
         int target = startAtNext ? (saved + 1) : saved;
         target = Mathf.Max(firstStageIndex, target);
         StartStage(target, resetRerolls);
     }
-    /* ========================= ÅÏ/Á¡¼ö API ========================= */
+    /* ========================= ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ API ========================= */
 
     public void EndTurn()
     {
-        if (Turns <= 0)  // ¾ÈÀüÀåÄ¡
+        if (Turns <= 0)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡
         {
             if (stageCleared) EndStage(); else EndStageDefeat();
             return;
@@ -212,9 +212,9 @@ public class ScoreManager : MonoBehaviour
 
         if (Turns <= 0)
         {
-            // ¿©±â¼­ ºÐ±â 
-            if (stageCleared) EndStage();      // ¸ñÇ¥ ´Þ¼º ÈÄ ÅÏÀÌ 0 ¡æ »óÁ¡(Å¬¸®¾î)
-            else EndStageDefeat(); // ¸ñÇ¥ ¹Ì´Þ & ÅÏ 0 ¡æ ÆÐ¹è
+            // ï¿½ï¿½ï¿½â¼­ ï¿½Ð±ï¿½ 
+            if (stageCleared) EndStage();      // ï¿½ï¿½Ç¥ ï¿½Þ¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Å¬ï¿½ï¿½ï¿½ï¿½)
+            else EndStageDefeat(); // ï¿½ï¿½Ç¥ ï¿½Ì´ï¿½ & ï¿½ï¿½ 0 ï¿½ï¿½ ï¿½Ð¹ï¿½
         }
         else
         {
@@ -237,6 +237,9 @@ public class ScoreManager : MonoBehaviour
     public int AddPlacementScore(int placedTileCount)
     {
         if (placedTileCount <= 0) return 0;
+
+        SoundManager.Instance.EffectSoundOn("TileV1");
+
         Score += placedTileCount;
         OnScoreChanged?.Invoke(Score);
         CheckStageGoal();
@@ -246,6 +249,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (cellsPerRow <= 0 || rowsCleared <= 0) return 0;
         
+
+        SoundManager.Instance.EffectSoundOn("TransformationV1");
+
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         gain *= (1 + InGameManager.Instance.HasItem(eItemType.EreaseScoreUp));
         if (cellsPerRow / 2 == 0 && InGameManager.Instance.HasItem(eItemType.LikeEvenErease) > 0)
@@ -262,14 +268,14 @@ public class ScoreManager : MonoBehaviour
         }
         Score += gain;
         OnScoreChanged?.Invoke(Score);
-        // ÁÙ 1°³´ç 1ÄÚÀÎ (µ¿½Ã¿¡ NÁÙ ¡æ +N ÄÚÀÎ)
-        // ÁÙ 1°³´ç 1ÄÚÀÎ (µ¿½Ã¿¡ NÁÙ ¡æ +N ÄÚÀÎ)
+        // ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ã¿ï¿½ Nï¿½ï¿½ ï¿½ï¿½ +N ï¿½ï¿½ï¿½ï¿½)
+        // ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ã¿ï¿½ Nï¿½ï¿½ ï¿½ï¿½ +N ï¿½ï¿½ï¿½ï¿½)
         CoinManager.Instance?.AddCoin(rowsCleared);
 
-        /* ¡Ú Áß¿ä: ¸ÕÀú ¸ñÇ¥ ´Þ¼º Ã¼Å© */
+        /* ï¿½ï¿½ ï¿½ß¿ï¿½: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Þ¼ï¿½ Ã¼Å© */
         CheckStageGoal();
 
-        /* ¡Ú ¸ñÇ¥ ´Þ¼ºµÇÁö ¾Ê¾Ò´Ù¸é ±×¶§¸¸ ÅÏ ¼Ò¸ð */
+        /* ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´Ù¸ï¿½ ï¿½×¶ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò¸ï¿½ */
         if (!stageCleared)
             EndTurn();
 
@@ -290,13 +296,13 @@ public class ScoreManager : MonoBehaviour
         Score += bonus;
         OnScoreChanged?.Invoke(Score);
 
-        // ÄÞº¸ Ä«¿îÆ®¸¸Å­ ÄÚÀÎ Ãß°¡
+        // ï¿½Þºï¿½ Ä«ï¿½ï¿½Æ®ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         CoinManager.Instance?.AddCoin(comboCount);
         CheckStageGoal();
         return bonus;
     }
 
-    /* ========================= ¸ñÇ¥ ´Þ¼º Ã³¸® ========================= */
+    /* ========================= ï¿½ï¿½Ç¥ ï¿½Þ¼ï¿½ Ã³ï¿½ï¿½ ========================= */
 
     void CheckStageGoal()
     {
@@ -311,18 +317,18 @@ public class ScoreManager : MonoBehaviour
     {
         stageCleared = true;
 
-        // ³²Àº ÅÏ º¸³Ê½º: ³²ÀºÅÏ ¡¿ remainTurnScore
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ê½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ remainTurnScore
         if (Turns > 0 && remainTurnScore > 0)
         {
             Score += Turns * remainTurnScore;
             OnScoreChanged?.Invoke(Score);
         }
-        // ÄÚÀÎ º¸³Ê½º(³²Àº ÅÏ ¼ö¸¸Å­)
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å­)
         if (Turns > 0)
             CoinManager.Instance?.AddCoin(Turns);
 
-        SaveStageClearProgress(); // ½ºÅ×ÀÌÁö ÀúÀå
-        CoinManager.Instance?.SaveCoin(); // ÄÚÀÎ ÀúÀå
+        SaveStageClearProgress(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        CoinManager.Instance?.SaveCoin(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
         OpenClearPanel();
@@ -334,43 +340,53 @@ public class ScoreManager : MonoBehaviour
     public void OpenClearPanel()
     {
         onStageCleared?.Invoke();
+
+        SoundManager.Instance.OnBgmVolumeChange(0.5f);
+        SoundManager.Instance.EffectSoundOn("WinV1");
+
         if (clearPanel) clearPanel.SetActive(true);
     }
 
-    // ¡Ú Å¬¸®¾î ÆÐ³Î ´Ý°í, »óÁ¡ UI ¿­±â
+    // ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ ï¿½Ý°ï¿½, ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
     public void CloseClearPanelAndOpenShopUI()
     {
         if (clearPanel) clearPanel.SetActive(false);
-        EndStage(); // ±âÁ¸ »óÁ¡ ¿ÀÇÂ ·ÎÁ÷ Àç»ç¿ë
+        SoundManager.Instance.OnBgmVolumeChange(1f);
+        EndStage(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
-    // »óÁ¡ ´Ý°í ´ÙÀ½(¶Ç´Â ÁöÁ¤) ½ºÅ×ÀÌÁö·Î ½ÃÀÛ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void NextStage(int? stageIndexOverride = null, bool resetRerolls = true)
     {
         CloseShop();
         int next = stageIndexOverride.HasValue ? stageIndexOverride.Value : (CurrentStage + 1);
         StartStage(next, resetRerolls);
     }
-    // ¦¡¦¡ DEFEAT °æ·Î: ÆÐ¹è ÆÐ³Î ¿­±â/´Ý±â ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+    // ï¿½ï¿½ï¿½ï¿½ DEFEAT ï¿½ï¿½ï¿½: ï¿½Ð¹ï¿½ ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½Ý±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void EndStageDefeat()   // NEW
     {
         onStageDefeated?.Invoke();
+
+        SoundManager.Instance.OnBgmVolumeChange(0.5f);
+        SoundManager.Instance.EffectSoundOn("LoseV1");
+
         if (defeatPanel) defeatPanel.SetActive(true);
     }
     public void CloseDefeatPanel() // NEW
     {
         if (defeatPanel) defeatPanel.SetActive(false);
+        SoundManager.Instance.OnBgmVolumeChange(1f);
     }
 
     public void RestartRun(bool resetRerolls = true)
     {
         CloseDefeatPanel();
 
-        // ÄÚÀÎ ÀüºÎ »èÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         CoinManager.Instance?.ResetCoin(0);
-        // ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ ÀüºÎ »èÁ¦
+        // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         ItemManager.Instance?.ClearAllItems();
-        // ½ºÅ×ÀÌÁö¸¦ Ã³À½ºÎÅÍ ½ÃÀÛ(Á¡¼ö´Â StartStage ³»ºÎ¿¡¼­ 0À¸·Î ÃÊ±âÈ­µÊ)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ StartStage ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½)
         StartStage(firstStageIndex, resetRerolls);
         ResetSavedProgress();
     }
