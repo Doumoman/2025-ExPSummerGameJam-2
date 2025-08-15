@@ -15,8 +15,14 @@ public class SrartUiBtn : MonoBehaviour
         CreditPanel.SetActive(false);
     }
 
-    public void StartBtn()
+    public void NewStartBtn()
     {
+        GameManager.Inst.isReset = true;
+        StageManager.Instance.LoadGameScene();
+    }
+    public void LoadStartBtn()
+    {
+        GameManager.Inst.isReset = false;
         StageManager.Instance.LoadGameScene();
     }
 
