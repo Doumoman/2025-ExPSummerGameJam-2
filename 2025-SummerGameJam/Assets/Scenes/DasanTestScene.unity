@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732e57dffe7c32c439b001c33fac4f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlowPrefab: {fileID: 0}
+  BlowPrefab: {fileID: 3428151906645129569, guid: 0995ccb3d6460d2488abcc8b9626e186, type: 3}
   TileContainer: {fileID: 1051078743}
   hexPrefab: {fileID: 5738394173026089439, guid: bda0f0391e5fac54e99d632cabd8e4a0, type: 3}
   WormContainer: {fileID: 746498267}
@@ -1111,6 +1111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d95aedc47ce89f4d8e77ef9564f00b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReset: 0
   DamagePrefab: {fileID: 6684121251000755154, guid: e99239107d22627478d8e4d08d5839c8, type: 3}
   Score: 0
 --- !u!4 &864275087
