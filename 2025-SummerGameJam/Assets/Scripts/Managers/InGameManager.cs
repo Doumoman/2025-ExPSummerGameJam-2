@@ -135,6 +135,9 @@ public class InGameManager : MonoBehaviour
         return true;
     }
 
+    private int OddPlacement = 0;
+    private int EvenPlacement = 0;
+    
     public void PlaceWorm(WormTile Worm)
     {
         int DamageSum = 0;
@@ -148,7 +151,29 @@ public class InGameManager : MonoBehaviour
                 InGameManager.Instance._worms[cell.y, cell.x] = Worm._wormInfo;
             }
             DrawManager.Instance.RefreshWorm();
-            DamageSum += ScoreManager.Instance.AddPlacementScore(Worm.transform.childCount * (1 + HasItem(eItemType.PositionScoreUp)));
+            int Damage = Worm.transform.childCount;
+            if (Damage / 2 == 0)
+            {
+                EvenPlacement = 0;
+                OddPlacement++;
+                if (OddPlacement > 2 && HasItem(eItemType.LikeOddPosition) > 0)
+                {
+                    Damage += 1 + OddPlacement * 2 * HasItem(eItemType.LikeOddPosition);
+                }
+            }
+            else
+            {
+                OddPlacement = 0;
+                EvenPlacement++;
+                if (EvenPlacement > 2 && HasItem(eItemType.LikeEvenPosition) > 0)
+                {
+                    Damage += 1 + EvenPlacement * 2 * HasItem(eItemType.LikeEvenPosition);
+                }
+            }
+            Damage *= (1 + HasItem(eItemType.PositionScoreUp));
+            DamageSum += Damage;
+            
+            ScoreManager.Instance.AddPlacementScore(Damage);
             Destroy(Worm.gameObject);
         }
         
@@ -158,7 +183,7 @@ public class InGameManager : MonoBehaviour
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         
-        DamageSum += ScoreManager.Instance.AddRowClearScore(result.count, result.coords.Count);
+        DamageSum += ScoreManager.Instance.AddRowClearScore(result.coords.Count, result.count);
         
         GameManager.Inst.ShowDamage(DamageSum);
         

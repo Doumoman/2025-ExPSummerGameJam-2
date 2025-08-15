@@ -245,7 +245,21 @@ public class ScoreManager : MonoBehaviour
     public int AddRowClearScore(int cellsPerRow, int rowsCleared)
     {
         if (cellsPerRow <= 0 || rowsCleared <= 0) return 0;
+        
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
+        gain *= (1 + InGameManager.Instance.HasItem(eItemType.EreaseScoreUp));
+        if (cellsPerRow / 2 == 0 && InGameManager.Instance.HasItem(eItemType.LikeEvenErease) > 0)
+        {
+            gain *= 3 * InGameManager.Instance.HasItem(eItemType.LikeEvenErease);
+        }
+        if (cellsPerRow / 2 == 1 && InGameManager.Instance.HasItem(eItemType.LikeOddErease) > 0)
+        {
+            gain *= 3 * InGameManager.Instance.HasItem(eItemType.LikeOddErease);
+        }
+        if (rowsCleared >= 2 && InGameManager.Instance.HasItem(eItemType.ComboUp) > 0)
+        {
+            gain *= 4 * InGameManager.Instance.HasItem(eItemType.ComboUp);
+        }
         Score += gain;
         OnScoreChanged?.Invoke(Score);
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
