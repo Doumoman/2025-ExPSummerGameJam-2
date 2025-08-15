@@ -228,6 +228,9 @@ public class ScoreManager : MonoBehaviour
     public int AddPlacementScore(int placedTileCount)
     {
         if (placedTileCount <= 0) return 0;
+
+        SoundManager.Instance.EffectSoundOn("TileV1");
+
         Score += placedTileCount;
         OnScoreChanged?.Invoke(Score);
         CheckStageGoal();
@@ -239,6 +242,8 @@ public class ScoreManager : MonoBehaviour
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         Score += gain;
         OnScoreChanged?.Invoke(Score);
+
+        SoundManager.Instance.EffectSoundOn("Transformation V1");
 
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
         // 줄 1개당 1코인 (동시에 N줄 → +N 코인)
