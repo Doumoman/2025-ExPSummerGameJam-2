@@ -71,6 +71,7 @@ public class ScoreManager : MonoBehaviour
     public int Rerolls { get; private set; }
 
     /* ───────── 이벤트 ───────── */
+    public event Action<int> OnGoalScoreChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnTurnChanged;
     public event Action<int> OnRerollChanged;
@@ -123,6 +124,7 @@ public class ScoreManager : MonoBehaviour
 
         // 목표 스코어 자동 계산
         CurrentStageGoal = ComputeStageGoal(stageIndex);
+        OnGoalScoreChanged?.Invoke(CurrentStageGoal);
         stageCleared = false;
 
         /* 스테이지 시작 시 점수 초기화 */

@@ -16,10 +16,10 @@ public class DamageEffect : MonoBehaviour
 
     public void ShowDamage(int damage)
     {
-        if (damage <= 0) return;
-        
         DOTween.Kill(damageText); // 이전 트윈 제거
         
+        if (damage <= 0) return;
+
 
         float t = Mathf.InverseLerp(minDamage, maxDamage, damage);
         float startSize = Mathf.Lerp(minFontSize, maxFontSize, t);
