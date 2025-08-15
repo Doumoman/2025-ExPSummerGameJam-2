@@ -148,8 +148,8 @@ public class InGameManager : MonoBehaviour
         return true;
     }
 
-    private int OddPlacement = 0;
-    private int EvenPlacement = 0;
+    public int OddPlacement = 0;
+    public int EvenPlacement = 0;
     
     public void PlaceWorm(WormTile Worm)
     {
@@ -165,12 +165,14 @@ public class InGameManager : MonoBehaviour
             }
             DrawManager.Instance.RefreshWorm();
             int Damage = Worm.transform.childCount;
-            if (Damage / 2 == 0)
+            if (Damage % 2 == 0)
             {
                 EvenPlacement = 0;
                 OddPlacement++;
                 if (OddPlacement > 2 && HasItem(eItemType.LikeOddPosition) > 0)
                 {
+                    Debug.Log("Kexi2");  
+
                     Damage += 1 + OddPlacement * 2 * HasItem(eItemType.LikeOddPosition);
                 }
             }
@@ -180,6 +182,7 @@ public class InGameManager : MonoBehaviour
                 EvenPlacement++;
                 if (EvenPlacement > 2 && HasItem(eItemType.LikeEvenPosition) > 0)
                 {
+                    Debug.Log("Kexi");  
                     Damage += 1 + EvenPlacement * 2 * HasItem(eItemType.LikeEvenPosition);
                 }
             }

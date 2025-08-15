@@ -2691,6 +2691,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NextStage
       objectReference: {fileID: 0}
+    - target: {fileID: 4033399155970859971, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4386599901998541954, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
       propertyPath: allItems.Array.size
       value: 9

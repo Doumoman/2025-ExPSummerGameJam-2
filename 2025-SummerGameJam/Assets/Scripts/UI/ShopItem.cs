@@ -24,6 +24,8 @@ public class ShopItemCard : MonoBehaviour
     {
         boundItem = item;
 
+        itemType = item.itemType;
+        
         icon.sprite = item.icon;
         description.text = item.itemEffect;
 

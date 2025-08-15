@@ -144,6 +144,9 @@ public class ScoreManager : MonoBehaviour
 
         if (resetRerolls) Rerolls = startRerolls + InGameManager.Instance.HasItem(eItemType.TileRerollUp);
 
+        InGameManager.Instance.OddPlacement = 0;
+        InGameManager.Instance.EvenPlacement = 0;
+
         OnTurnChanged?.Invoke(Turns);
         OnRerollChanged?.Invoke(Rerolls);
         OnTurnStarted?.Invoke(CurrentStage, Turns);
