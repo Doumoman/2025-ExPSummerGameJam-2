@@ -712,11 +712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16540459faad9b14e8d6a23a65de9a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  a: 50
-  b: 1.15
-  c: 1
-  s: 4
-  fixedStageTurns: 20
+  a: 34
+  b: 1.08
+  c: -18
+  s: 15
+  fixedStageTurns: 10
   startTurns: 0
   startRerolls: 3
   autoLoadFromPrefs: 1
