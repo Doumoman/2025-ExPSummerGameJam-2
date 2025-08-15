@@ -8,6 +8,7 @@ public class ShopItemCard : MonoBehaviour
     [SerializeField] private TMP_Text nameText; // 아이템 이름
     [SerializeField] private TMP_Text description;
     [SerializeField] private TMP_Text priceText;// 아이템 가격
+    [SerializeField] private eItemType itemType;
     [SerializeField] Color boughtColor;
     [SerializeField] Image cardColor;
 
@@ -34,14 +35,13 @@ public class ShopItemCard : MonoBehaviour
     {
         if (boundItem == null) return;
 
-        if (CoinManager.Instance.UseCoin(boundItem.price) && ItemManager.Instance.myItem < 5)
+        if (CoinManager.Instance.UseCoin(boundItem.price) && InGameManager.Instance.CanGetItem())
         {
             cardColor.color = boughtColor;
-            ItemManager.Instance.AddItem(boundItem);
+            
+            InGameManager.Instance.GetItem(itemType);
 
             myButton.interactable = false;
-
-            ItemManager.Instance.myItemPlusOne();
         }
     }
 }

@@ -15,6 +15,20 @@ public enum eBeehiveType
     Black,
 }
 
+public enum eItemType
+{
+    TileRerollUp,
+    TurnUp,
+    EreaseTile, // X
+    PositionScoreUp,
+    LikeOddPosition,
+    LikeEvenPosition,
+    EreaseScoreUp,
+    LikeOddErease,
+    LikeEvenErease,
+    ComboUp,
+}
+
 public enum eWormType
 {
     None,
