@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageText: {fileID: 2286063066359436174}
   minDamage: 3
-  maxDamage: 1000
+  maxDamage: 40
   minFontSize: 100
   maxFontSize: 400
   growDuration: 0.5
