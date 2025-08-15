@@ -17,11 +17,12 @@ public class SrartUiBtn : MonoBehaviour
 
     public void NewStartBtn()
     {
+        GameManager.Inst.isReset = true;
         StageManager.Instance.LoadGameScene();
-        ScoreManager.Instance.RestartRun();
     }
     public void LoadStartBtn()
     {
+        GameManager.Inst.isReset = false;
         StageManager.Instance.LoadGameScene();
     }
 

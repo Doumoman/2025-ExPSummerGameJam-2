@@ -93,6 +93,10 @@ public class ScoreManager : MonoBehaviour
     
     void Start()
     {
+        if (GameManager.Inst.isReset)
+        {
+            RestartRun();
+        }
         Rerolls = startRerolls;
         Turns = startTurns;
 

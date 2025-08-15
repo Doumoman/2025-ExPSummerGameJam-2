@@ -48,12 +48,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public static ResourceManager Resource { get { return Inst._resource; } }
     public static SoundManager Sound { get { return Inst._sound; } }
-    public static bool isPlayerZoomOutAllowed = false;
-    public static bool isFinishBossZoominAllowed = false;
 
-    public static bool isStage1Cleared = false;
-    public static bool isStage2Cleared = false;
-    public static bool isStage3Cleared = false;
+    public bool isReset = false;
 
     public GameObject DamagePrefab;
 
