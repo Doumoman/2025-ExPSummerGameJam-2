@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class DrawManager : MonoBehaviour
@@ -39,6 +40,8 @@ public class DrawManager : MonoBehaviour
     
     // ================= 인게임 코드 ===============
 
+    public GameObject BlowPrefab;
+    
     public Transform TileContainer;
     public GameObject hexPrefab;
 
@@ -104,7 +107,13 @@ public class DrawManager : MonoBehaviour
                 {
                     if (cell.x == j && cell.y == i)
                     {
+                        bool bLastOccupied = cell.bIsOccupied;
                         cell.bIsOccupied = _worms[i, j] != null;
+
+                        if (bLastOccupied && cell.bIsOccupied == false)
+                        {
+                            Instantiate(BlowPrefab, cell.transform.position, quaternion.identity, this.transform);
+                        }
                     }
                 }
                 
