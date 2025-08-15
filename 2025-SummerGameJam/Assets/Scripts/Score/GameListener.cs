@@ -23,6 +23,10 @@ public class GameListener : MonoBehaviour
     [SerializeField] Button addTurnButton;          // NEW: 턴 +1
     [SerializeField] Button restartRunButton; // 재시작 버튼
     [SerializeField] Button goShopFromClearButton; // 클리어 후 상점 UI 여는 버튼
+    [SerializeField] Button continueGameButton;
+    [SerializeField] Button quitGameButton;
+    [SerializeField] Button resumeButton;
+    [SerializeField] Button returnToMenuButton;
 
     [Header("Stage Start (Inspector int)")]
     [Tooltip("Start Game 버튼으로 시작할 스테이지 인덱스")]
@@ -48,6 +52,10 @@ public class GameListener : MonoBehaviour
         if (addTurnButton) addTurnButton.onClick.AddListener(OnClickAddTurn); // NEW
         if (restartRunButton) restartRunButton.onClick.AddListener(OnClickRestartStage);
         if (goShopFromClearButton) goShopFromClearButton.onClick.AddListener(OnClickGoShopFromClear);
+        if (continueGameButton) continueGameButton.onClick.AddListener(OnClickContinue);
+        if (quitGameButton) quitGameButton.onClick.AddListener(OnClickQuit);
+        if (resumeButton) resumeButton.onClick.AddListener(OnclickResume);
+        if (returnToMenuButton) returnToMenuButton.onClick.AddListener(OnClickReturn);
         if (SM != null)
         {
             SM.OnScoreChanged += _ => RefreshTexts();
@@ -71,6 +79,10 @@ public class GameListener : MonoBehaviour
         if (addTurnButton) addTurnButton.onClick.RemoveListener(OnClickAddTurn);
         if (restartRunButton) restartRunButton.onClick.RemoveListener(OnClickRestartStage);
         if (goShopFromClearButton) goShopFromClearButton.onClick.RemoveListener(OnClickGoShopFromClear);
+        if (continueGameButton) continueGameButton.onClick.RemoveListener(OnClickContinue);
+        if (quitGameButton) quitGameButton.onClick.RemoveListener(OnClickQuit);
+        if (resumeButton) resumeButton.onClick.RemoveListener(OnclickResume);
+        if (returnToMenuButton) returnToMenuButton.onClick.RemoveListener(OnClickReturn);
 
         if (SM != null)
         {
@@ -88,6 +100,8 @@ public class GameListener : MonoBehaviour
     {
         SM?.EndTurn();
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
 
     void OnClickStageClear()
@@ -96,6 +110,8 @@ public class GameListener : MonoBehaviour
         int need = Mathf.Max(0, SM.GetStageGoal() - SM.GetScore());
         if (need > 0) SM.AddPlacementScore(need);
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
 
     void OnClickStartGame()
@@ -103,6 +119,8 @@ public class GameListener : MonoBehaviour
         if (SM == null) return;
         SM.StartStage(stageToStart, resetRerolls: true); // 인스펙터 int로 시작
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
 
     void OnClickNextStage()
@@ -110,6 +128,8 @@ public class GameListener : MonoBehaviour
         if (SM == null) return;
         SM.NextStage(); // 상점 닫고 현재+1 스테이지
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
 
     void OnClickAddTurn()                           // NEW
@@ -117,11 +137,15 @@ public class GameListener : MonoBehaviour
         if (SM == null) return;
         SM.AddTurns(1);
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
     void OnClickGoShopFromClear()
     {
         ScoreManager.Instance?.CloseClearPanelAndOpenShopUI();
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
     void EraseLines(int lines)
     {
@@ -129,10 +153,34 @@ public class GameListener : MonoBehaviour
         int gained = SM.AddRowClearScore(cellsPerRow, lines);
         SM.AddComboBonus(lines, gained);
         RefreshTexts();
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
     public void OnClickRestartStage()
     {
         ScoreManager.Instance?.RestartRun(resetRerolls: true);
+
+        SoundManager.Instance.EffectSoundOn("SelectV1");
+    }
+
+    public void OnClickContinue()
+    {
+        SoundManager.Instance.EffectSoundOn("SelectV1");
+    }
+
+    private void OnClickQuit()
+    {
+        SoundManager.Instance.EffectSoundOn("SelectV1");
+    }
+
+    private void OnclickResume()
+    {
+        SoundManager.Instance.EffectSoundOn("SelectV1");
+    }
+
+    private void OnClickReturn()
+    {
+        SoundManager.Instance.EffectSoundOn("SelectV1");
     }
     /* ───────── UI 갱신 ───────── */
 

@@ -675,8 +675,12 @@ MonoBehaviour:
   erase3Button: {fileID: 0}
   nextStageButton: {fileID: 2081703625}
   addTurnButton: {fileID: 0}
-  restartRunButton: {fileID: 0}
+  restartRunButton: {fileID: 1615815833}
   goShopFromClearButton: {fileID: 1655875718}
+  continueGameButton: {fileID: 0}
+  quitGameButton: {fileID: 0}
+  resumeButton: {fileID: 1615815832}
+  returnToMenuButton: {fileID: 1615815831}
   stageToStart: 1
   cellsPerRow: 10
 --- !u!1 &592769105
@@ -1934,6 +1938,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1615815831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7254223561117138391, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+  m_PrefabInstance: {fileID: 1615815827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1615815832 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3172239858956640941, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+  m_PrefabInstance: {fileID: 1615815827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1615815833 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6939113463107271260, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+  m_PrefabInstance: {fileID: 1615815827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1644841166

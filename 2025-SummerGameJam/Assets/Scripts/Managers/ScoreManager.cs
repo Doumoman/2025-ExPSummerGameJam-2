@@ -230,6 +230,9 @@ public class ScoreManager : MonoBehaviour
     public int AddPlacementScore(int placedTileCount)
     {
         if (placedTileCount <= 0) return 0;
+
+        SoundManager.Instance.EffectSoundOn("TileV1");
+
         Score += placedTileCount;
         OnScoreChanged?.Invoke(Score);
         CheckStageGoal();
@@ -238,6 +241,9 @@ public class ScoreManager : MonoBehaviour
     public int AddRowClearScore(int cellsPerRow, int rowsCleared)
     {
         if (cellsPerRow <= 0 || rowsCleared <= 0) return 0;
+
+        SoundManager.Instance.EffectSoundOn("TransformationV1");
+
         int gain = (cellsPerRow * rowCellPoint) * rowsCleared;
         Score += gain;
         OnScoreChanged?.Invoke(Score);
@@ -313,6 +319,10 @@ public class ScoreManager : MonoBehaviour
     public void OpenClearPanel()
     {
         onStageCleared?.Invoke();
+
+        SoundManager.Instance.OnBgmVolumeChange(0.5f);
+        SoundManager.Instance.EffectSoundOn("WinV1");
+
         if (clearPanel) clearPanel.SetActive(true);
     }
 
@@ -320,6 +330,7 @@ public class ScoreManager : MonoBehaviour
     public void CloseClearPanelAndOpenShopUI()
     {
         if (clearPanel) clearPanel.SetActive(false);
+        SoundManager.Instance.OnBgmVolumeChange(1f);
         EndStage(); // 기존 상점 오픈 로직 재사용
     }
 
@@ -334,11 +345,16 @@ public class ScoreManager : MonoBehaviour
     public void EndStageDefeat()   // NEW
     {
         onStageDefeated?.Invoke();
+
+        SoundManager.Instance.OnBgmVolumeChange(0.5f);
+        SoundManager.Instance.EffectSoundOn("LoseV1");
+
         if (defeatPanel) defeatPanel.SetActive(true);
     }
     public void CloseDefeatPanel() // NEW
     {
         if (defeatPanel) defeatPanel.SetActive(false);
+        SoundManager.Instance.OnBgmVolumeChange(1f);
     }
 
     public void RestartRun(bool resetRerolls = true)
