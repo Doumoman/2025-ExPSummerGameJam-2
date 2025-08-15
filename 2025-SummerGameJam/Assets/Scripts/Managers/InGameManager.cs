@@ -49,7 +49,11 @@ public class InGameManager : MonoBehaviour
     private WormSpawner _wormSpawner;
     public event Action OnMapChanged;
     public event Action OnWormChanged;
-    
+
+    [Header("Placement per Turn")]
+    [SerializeField] int placementsPerTurn = 3;   // 한 턴에 필요한 배치 횟수(=3)
+    int placedThisTurn = 0;
+
     private List<GameObject> _lightings = new List<GameObject>();
     
     public eBeehiveType[,] _beeHive = new eBeehiveType[9, 9]; // color 저장
@@ -63,6 +67,7 @@ public class InGameManager : MonoBehaviour
 
         MakeMap();
         ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);
+        ScoreManager.Instance.OnTurnStarted += OnTurnStarted_ResetPlacement;
     }
 
     public void MakeMap()
@@ -73,7 +78,15 @@ public class InGameManager : MonoBehaviour
 
         _wormSpawner.SpawnNewSet();
     }
-    
+    private void OnDestroy()
+    {
+        if (ScoreManager.Instance != null)
+            ScoreManager.Instance.OnTurnStarted -= OnTurnStarted_ResetPlacement;
+    }
+    void OnTurnStarted_ResetPlacement(int stage, int remTurns)
+    {
+        placedThisTurn = 0;
+    }
     // 맵 초기화
     void InitBeeHive()
     {
@@ -150,6 +163,7 @@ public class InGameManager : MonoBehaviour
             DrawManager.Instance.RefreshWorm();
             DamageSum += ScoreManager.Instance.AddPlacementScore(Worm.transform.childCount);
             Destroy(Worm.gameObject);
+            OnWormPlacedOnce();
         }
         
         var result = GetLines();
@@ -225,7 +239,26 @@ public class InGameManager : MonoBehaviour
     {
         OnWormChanged?.Invoke();
     }
+    //벌레가 한마리 배치될 때
+    void OnWormPlacedOnce()
+    {
+        placedThisTurn = Mathf.Max(0, placedThisTurn + 1);
 
+        if (placedThisTurn >= placementsPerTurn)
+        {
+            placedThisTurn = 0; // 다음 턴을 위해 초기화
+
+            // 턴 종료 (클리어/패배 분기는 ScoreManager가 처리)
+            ScoreManager.Instance?.EndTurn();
+
+            // ★ 스테이지가 계속 진행 중이면, 즉시 다음 3마리 스폰
+            //    (클리어/패배로 패널이 열렸다면 Turns는 0이므로 스폰되지 않음)
+            if (ScoreManager.Instance != null && ScoreManager.Instance.GetTurn() > 0)
+            {
+                _wormSpawner?.SpawnNewSet(); // 기존 SpawnWorm()을 쓰고 있다면 그걸 호출
+            }
+        }
+    }
     // 새로운 맵 생성
     void RefreshMap()
     {

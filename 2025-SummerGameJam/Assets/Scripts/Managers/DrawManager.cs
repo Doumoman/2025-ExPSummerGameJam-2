@@ -120,8 +120,6 @@ public class DrawManager : MonoBehaviour
                         {
                             Instantiate(BlowPrefab, cell.transform.position, quaternion.identity, this.transform);
 
-                            // 벌레가 사라졌음을 알림 (3번만 호출되도록 WormSpawner 내부에서 제어)
-                            WormSpawner.NotifyWormConsumed();
                         }
                     }
                 }
