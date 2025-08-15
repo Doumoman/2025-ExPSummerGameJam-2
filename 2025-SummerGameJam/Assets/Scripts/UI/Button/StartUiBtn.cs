@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SrartUiBtn : MonoBehaviour
@@ -16,7 +17,7 @@ public class SrartUiBtn : MonoBehaviour
 
     public void StartBtn()
     {
-        //LoadStartScene
+        StageManager.Instance.LoadGameScene();
     }
 
     public void SettingBtn()

@@ -1,16 +1,14 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ScoreGauge : MonoBehaviour
 {
+    [SerializeField] Image fillImage;
 
-
-    private void Awake()
-    {
-
-    }
+    float rate;
     private void Update()
     {
-        //fillImage.fillamount = gamemanager.currentscore / goalscore
+        //rate = ScoreManager.Instance.Score / ScoreManager.Instance.CurrentStageGoal;
+        //fillImage.fillAmount = Mathf.Clamp01(rate);
     }
 }

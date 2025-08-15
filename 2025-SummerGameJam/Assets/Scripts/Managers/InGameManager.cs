@@ -60,6 +60,9 @@ public class InGameManager : MonoBehaviour
     private void Start()
     {
         _wormSpawner = GetComponent<WormSpawner>();
+
+        MakeMap();
+        ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);
     }
 
     public void MakeMap()
