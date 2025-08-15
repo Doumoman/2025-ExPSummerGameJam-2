@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     }
     public void ShowDamage(int damage)
     {
+        if (damage <= 0) return;
         Canvas canvas = FindAnyObjectByType<Canvas>();
         GameObject obj = Instantiate(DamagePrefab, canvas.transform);
         obj.GetComponent<DamageEffect>().ShowDamage(damage);

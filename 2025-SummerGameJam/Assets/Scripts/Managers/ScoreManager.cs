@@ -134,12 +134,15 @@ public class ScoreManager : MonoBehaviour
         /* 스테이지 시작 시 점수 초기화 */
         Score = 0;
         OnScoreChanged?.Invoke(Score);
+        
+        // 맵도 초기화
+        InGameManager.Instance.RefreshMap();
 
         // 턴 수는 고정값 사용
         StageTotalTurns = fixedStageTurns;
         Turns = StageTotalTurns;
 
-        if (resetRerolls) Rerolls = startRerolls;
+        if (resetRerolls) Rerolls = startRerolls + InGameManager.Instance.HasItem(eItemType.TileRerollUp);
 
         OnTurnChanged?.Invoke(Turns);
         OnRerollChanged?.Invoke(Rerolls);

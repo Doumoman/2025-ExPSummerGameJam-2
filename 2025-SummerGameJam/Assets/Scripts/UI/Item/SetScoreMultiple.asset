@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d20f2fa296785246ad3f27ea47a8886, type: 3}
   m_Name: SetScoreMultiple
   m_EditorClassIdentifier: 
+  itemType: 3
   itemName: "\uD0C0\uC77C \uBC30\uCE58 \uC810\uC218 \uC99D\uAC00"
   icon: {fileID: 2413715232333512126, guid: ada1a65b2e6605e489bae9e488204222, type: 3}
   price: 7
