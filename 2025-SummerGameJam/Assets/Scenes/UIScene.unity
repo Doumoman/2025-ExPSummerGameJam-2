@@ -1277,6 +1277,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8424626708112900176, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: itemImagePrefab
+      value: 
+      objectReference: {fileID: 170979225170805652, guid: ffe75feb470424a4bac2c85dd5ddcf5c, type: 3}
     - target: {fileID: 8758626612625965882, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -2069,7 +2073,7 @@ MonoBehaviour:
   nextStageButton: {fileID: 1115314039}
   addTurnButton: {fileID: 0}
   restartRunButton: {fileID: 279054587}
-  goShopFromClearButton: {fileID: 0}
+  goShopFromClearButton: {fileID: 2123699720}
   stageToStart: 1
   cellsPerRow: 10
 --- !u!1001 &2107984817
@@ -2186,6 +2190,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8617766780771439744, guid: ee977fd64798a954a9f506e0d762013b, type: 3}
   m_PrefabInstance: {fileID: 2107984817}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2123699720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 155021329429832597, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+  m_PrefabInstance: {fileID: 3355395543586813299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2147217233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,6 +2552,10 @@ PrefabInstance:
     - target: {fileID: 8896367511002588765, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104933962757655480, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+      propertyPath: m_Name
+      value: ShopButton
       objectReference: {fileID: 0}
     - target: {fileID: 9140786071432772003, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2892,6 +2911,10 @@ PrefabInstance:
     - target: {fileID: 5918457810207613554, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
       propertyPath: m_Color.r
       value: 0.84276724
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041407720964283690, guid: 2170d216cf288bb41ac59dca3f05f75d, type: 3}
+      propertyPath: m_text
+      value: NextStage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

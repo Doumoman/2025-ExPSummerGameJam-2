@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6534061556564772210}
   - component: {fileID: 7862422005104753118}
   - component: {fileID: 7721149065309753211}
+  - component: {fileID: 1524325981049135087}
+  - component: {fileID: -5630317320107811413}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -47,7 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3395a0aa74e894ba621054bf27f13b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WormType: 0
   WormPrefab: {fileID: 5028656816137249169, guid: 40070d0b44af6b846b73d73eadf80661, type: 3}
+  _wormInfo: {fileID: 0}
 --- !u!212 &6534061556564772210
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -151,3 +155,46 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_SortAtRoot: 0
+--- !u!114 &1524325981049135087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546094633003086165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37cdf53d0dc2402448b80ffe7b7e0145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  useRigidbody2D: 1
+--- !u!50 &-5630317320107811413
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546094633003086165}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
