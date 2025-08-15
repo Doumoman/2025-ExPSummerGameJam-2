@@ -275,9 +275,6 @@ public class ScoreManager : MonoBehaviour
         /* �� �߿�: ���� ��ǥ �޼� üũ */
         CheckStageGoal();
 
-        /* �� ��ǥ �޼����� �ʾҴٸ� �׶��� �� �Ҹ� */
-        if (!stageCleared)
-            EndTurn();
 
         CheckStageGoal();
         return gain;
