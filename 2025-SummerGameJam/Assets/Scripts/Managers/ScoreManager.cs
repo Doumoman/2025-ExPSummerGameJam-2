@@ -81,6 +81,18 @@ public class ScoreManager : MonoBehaviour
     [Header("When Stage Cleared �� Clear Panel")]
     [SerializeField] GameObject clearPanel;        // �� Ŭ���� �г�
     [SerializeField] UnityEvent onStageCleared;    // �� Ŭ���� �� ��(ȿ����/���� ��)
+    [Header("Clear Panel (Coins)")]
+    [SerializeField] TMPro.TextMeshProUGUI clearRowCoinText;
+    [SerializeField] TMPro.TextMeshProUGUI clearRemainTurnText;
+    [SerializeField] TMPro.TextMeshProUGUI clearRemainRerollText;
+    [SerializeField] TMPro.TextMeshProUGUI clearTotalCoinText;
+    [Header("Clear Coins Multiply)")]
+    [SerializeField] int coinPerRemainingTurn = 1;    // 남은 턴 1개 = 코인 n
+    [SerializeField] int coinPerRemainingReroll = 1;  // 남은 리롤 1개 = 코인 n
+
+    int coinFromRowClearsThisStage;   // 줄 지우기로 얻은 코인
+    int coinFromTurnsThisStage;       // 남은 턴 환산 코인
+    int coinFromRerollsThisStage;     // 남은 리롤 환산 코인
 
     [Header("If Stage Cleared, shopPopup")]
     [SerializeField] GameObject shopUIPanel;
@@ -134,7 +146,11 @@ public class ScoreManager : MonoBehaviour
         /* �������� ���� �� ���� �ʱ�ȭ */
         Score = 0;
         OnScoreChanged?.Invoke(Score);
-        
+
+        coinFromRowClearsThisStage = 0;
+        coinFromTurnsThisStage = 0;
+        coinFromRerollsThisStage = 0;
+
         // �ʵ� �ʱ�ȭ
         InGameManager.Instance.RefreshMap();
 
@@ -274,7 +290,7 @@ public class ScoreManager : MonoBehaviour
         // �� 1���� 1���� (���ÿ� N�� �� +N ����)
         // �� 1���� 1���� (���ÿ� N�� �� +N ����)
         CoinManager.Instance?.AddCoin(rowsCleared);
-
+        coinFromRowClearsThisStage += rowsCleared;
         /* �� �߿�: ���� ��ǥ �޼� üũ */
         CheckStageGoal();
 
@@ -324,11 +340,29 @@ public class ScoreManager : MonoBehaviour
             OnScoreChanged?.Invoke(Score);
         }
         // ���� ���ʽ�(���� �� ����ŭ)
-        if (Turns > 0)
-            CoinManager.Instance?.AddCoin(Turns);
+        // ★ 남은 턴/리롤 → 코인 환산
+        int remainTurns = Mathf.Max(0, Turns);
+        int remainReroll = Mathf.Max(0, Rerolls);
+
+        coinFromTurnsThisStage = remainTurns * Mathf.Max(0, coinPerRemainingTurn);
+        coinFromRerollsThisStage = remainReroll * Mathf.Max(0, coinPerRemainingReroll);
+
+        int totalCoinThisStage = coinFromRowClearsThisStage
+                               + coinFromTurnsThisStage
+                               + coinFromRerollsThisStage;
+
+        // 즉시 코인 지급(턴/리롤 환산분)
+        if (totalCoinThisStage > coinFromRowClearsThisStage)
+            CoinManager.Instance?.AddCoin(coinFromTurnsThisStage + coinFromRerollsThisStage);
 
         SaveStageClearProgress(); // �������� ����
         CoinManager.Instance?.SaveCoin(); // ���� ����
+
+        if (clearRowCoinText) clearRowCoinText.text = coinFromRowClearsThisStage.ToString("00");
+        if (clearRemainTurnText) clearRemainTurnText.text = coinFromTurnsThisStage.ToString("00");
+        if (clearRemainRerollText) clearRemainRerollText.text = coinFromRerollsThisStage.ToString("00");
+        if (clearTotalCoinText) clearTotalCoinText.text = totalCoinThisStage.ToString("00");
+
         Turns = 0;
         OnTurnChanged?.Invoke(Turns);
         OpenClearPanel();

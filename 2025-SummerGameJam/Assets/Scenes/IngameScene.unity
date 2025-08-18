@@ -281,7 +281,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1092782821}
         m_TargetAssemblyTypeName: WormSpawner, Assembly-CSharp
         m_MethodName: TryRerollSpawn
         m_Mode: 1
@@ -732,6 +732,12 @@ MonoBehaviour:
   onStageCleared:
     m_PersistentCalls:
       m_Calls: []
+  clearRowCoinText: {fileID: 1862141206}
+  clearRemainTurnText: {fileID: 616666870}
+  clearRemainRerollText: {fileID: 2061933792}
+  clearTotalCoinText: {fileID: 1734717980}
+  coinPerRemainingTurn: 1
+  coinPerRemainingReroll: 1
   shopUIPanel: {fileID: 2081703626}
   onStageEnded:
     m_PersistentCalls:
@@ -755,6 +761,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616666870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5843585776186953217, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+  m_PrefabInstance: {fileID: 1655875715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &631050973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,6 +2455,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1734717980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8328055984977075031, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+  m_PrefabInstance: {fileID: 1655875715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1766601340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2553,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862141206 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8331385091627273130, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+  m_PrefabInstance: {fileID: 1655875715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2032698906
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,6 +2651,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2061933792 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6450171042271345822, guid: c4526caa5bac1e94c8792b7408f684dd, type: 3}
+  m_PrefabInstance: {fileID: 1655875715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2081703623
 PrefabInstance:
   m_ObjectHideFlags: 0
