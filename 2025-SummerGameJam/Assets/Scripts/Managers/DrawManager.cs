@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class DrawManager : MonoBehaviour
 {
@@ -136,6 +137,8 @@ public class DrawManager : MonoBehaviour
     
     void RemoveTile()
     {
+        if (TileContainer == null) return;
+        
         foreach (Transform child in TileContainer)
         {
             Destroy(child.gameObject);
@@ -144,9 +147,13 @@ public class DrawManager : MonoBehaviour
 
     void RemoveWorm()
     {
-        foreach (Transform child in WormContainer)
+        if (WormContainer == null) return;
+
+        for (int i = WormContainer.childCount - 1; i >= 0; i--)
         {
-            Destroy(child.gameObject);
+            Transform child = WormContainer.GetChild(i);
+            if (child != null)
+                Destroy(child.gameObject);
         }
     }
 }

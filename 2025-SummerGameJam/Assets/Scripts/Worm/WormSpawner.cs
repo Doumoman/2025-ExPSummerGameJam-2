@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class WormSpawner : MonoBehaviour
 {
     // 각 타입별 가중치 관리
     public GameObject wormTile;
-    public Transform wormContainer;
+    [FormerlySerializedAs("wormContainer")] public Transform WormContainer;
     public List<Transform> spawnPoint;
     
     private Dictionary<eWormType, int> weights;
@@ -160,7 +161,7 @@ public class WormSpawner : MonoBehaviour
         List<eWormType> worms = PickThree();
         for (int i = 0; i < worms.Count; i++)
         {
-            GameObject worm = Instantiate(wormTile, Vector3.zero, Quaternion.identity, wormContainer);
+            GameObject worm = Instantiate(wormTile, Vector3.zero, Quaternion.identity, WormContainer);
 
             var wt = worm.GetComponent<WormTile>();
             wt.Initialize(GetWormInfo(worms[i]), spawnPoint[i].position, worms[i]);
@@ -177,9 +178,13 @@ public class WormSpawner : MonoBehaviour
 
     private void RemoveWorm()
     {
-        foreach (Transform child in wormContainer)
+        if (WormContainer == null) return;
+
+        for (int i = WormContainer.childCount - 1; i >= 0; i--)
         {
-            Destroy(child.gameObject);
+            Transform child = WormContainer.GetChild(i);
+            if (child != null)
+                Destroy(child.gameObject);
         }
     }
 }

@@ -28,7 +28,6 @@ public class GameUIText : MonoBehaviour
 
     void OnScoreChanged(int newScore)
     {
-        Debug.Log(newScore);
         ScoreText.SetText(newScore.ToString());
     }
 

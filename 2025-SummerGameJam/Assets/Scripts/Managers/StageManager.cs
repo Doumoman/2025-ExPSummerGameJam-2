@@ -46,8 +46,8 @@ public class StageManager : MonoBehaviour
      
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("DasanTestScene");
-        currentScene = "DasanTestScene";
+        SceneManager.LoadScene("IngameScene");
+        currentScene = "IngameScene";
 
         //ScoreManager.Instance.StartStage(ScoreManager.Instance.stage)
     }

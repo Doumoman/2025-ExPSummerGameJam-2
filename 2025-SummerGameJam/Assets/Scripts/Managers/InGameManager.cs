@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Vector2 = System.Numerics.Vector2;
 
 public class InGameManager : MonoBehaviour
@@ -65,9 +66,20 @@ public class InGameManager : MonoBehaviour
     {
         _wormSpawner = GetComponent<WormSpawner>();
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
         MakeMap();
         ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);
         ScoreManager.Instance.OnTurnStarted += OnTurnStarted_ResetPlacement;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().name == "IngameScene")
+        {
+            Debug.Log("1111");
+            MakeMap();
+            ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);   
+        }
     }
 
     public void MakeMap()
@@ -76,7 +88,7 @@ public class InGameManager : MonoBehaviour
         
         OnMapChanged?.Invoke();
 
-        _wormSpawner.SpawnNewSet();
+        FindAnyObjectByType<WormSpawner>()?.SpawnNewSet();
     }
     private void OnDestroy()
     {
@@ -113,8 +125,10 @@ public class InGameManager : MonoBehaviour
 
     public void TurnOff()
     {
+        if (_lightings == null) return;
         foreach (var light in _lightings)
         {
+            if (light == null || light.GetComponent<SpriteRenderer>() == null) continue;
             Color c = light.GetComponent<SpriteRenderer>().color;
             c.a = 1f;
             light.GetComponent<SpriteRenderer>().color = c;
@@ -283,13 +297,14 @@ public class InGameManager : MonoBehaviour
             //    (클리어/패배로 패널이 열렸다면 Turns는 0이므로 스폰되지 않음)
             if (ScoreManager.Instance != null && ScoreManager.Instance.GetTurn() > 0)
             {
-                _wormSpawner?.SpawnNewSet(); // 기존 SpawnWorm()을 쓰고 있다면 그걸 호출
+                FindAnyObjectByType<WormSpawner>().SpawnNewSet();
             }
         }
     }
     // 새로운 맵 생성
     public void RefreshMap()
     {
+        Debug.Log("3");
         for (int i = 0; i < 9; i++)
         {
             for (int j = 0; j < 9; j++)

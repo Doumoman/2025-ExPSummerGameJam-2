@@ -4,6 +4,6 @@ public class HomeBtn : MonoBehaviour
 {
     public void HomeButton()
     {
-        //LoadMenu
+        StageManager.Instance.LoadMenuScene();
     }
 }

@@ -281,7 +281,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 840560674}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: WormSpawner, Assembly-CSharp
         m_MethodName: TryRerollSpawn
         m_Mode: 1
@@ -973,7 +973,6 @@ GameObject:
   - component: {fileID: 840560671}
   - component: {fileID: 840560670}
   - component: {fileID: 840560673}
-  - component: {fileID: 840560674}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1011,6 +1010,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementsPerTurn: 3
+  OddPlacement: 0
+  EvenPlacement: 0
 --- !u!4 &840560672
 Transform:
   m_ObjectHideFlags: 0
@@ -1038,24 +1039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283bba3265e8225458206b6291b9b8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &840560674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840560669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5407d59377bd1f2459c2627cf1524876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormTile: {fileID: 546094633003086165, guid: ea77aa08d75c66046aaf10b4a3625303, type: 3}
-  wormContainer: {fileID: 1325530809}
-  spawnPoint:
-  - {fileID: 1487281698}
-  - {fileID: 2123336094}
-  - {fileID: 631050974}
 --- !u!1 &855121060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,8 +1212,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 555567197}
-  - {fileID: 1615815828}
   - {fileID: 1548689015}
+  - {fileID: 1615815828}
   - {fileID: 756711464}
   - {fileID: 1655875716}
   - {fileID: 2081703624}
@@ -1302,6 +1285,56 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.99546, y: -0.04973, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1092782820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092782822}
+  - component: {fileID: 1092782821}
+  m_Layer: 0
+  m_Name: WormSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1092782821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092782820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5407d59377bd1f2459c2627cf1524876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wormTile: {fileID: 546094633003086165, guid: ea77aa08d75c66046aaf10b4a3625303, type: 3}
+  WormContainer: {fileID: 1325530809}
+  spawnPoint:
+  - {fileID: 1487281698}
+  - {fileID: 2123336094}
+  - {fileID: 631050974}
+--- !u!4 &1092782822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092782820}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 628.2376, y: 964, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1682,7 +1715,7 @@ PrefabInstance:
     - target: {fileID: 8284963153041762229, guid: ee977fd64798a954a9f506e0d762013b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 840560674}
+      objectReference: {fileID: 0}
     - target: {fileID: 8284963153041762229, guid: ee977fd64798a954a9f506e0d762013b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SpawnWorm
@@ -1889,6 +1922,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6077605047038114820, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6211537043268950750, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1900,6 +1937,10 @@ PrefabInstance:
     - target: {fileID: 6211537043268950750, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6464686304295831839, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8424626708112900176, guid: 4f7117f5169e05e459ab190d6af2f226, type: 3}
       propertyPath: itemImagePrefab
@@ -2828,3 +2869,4 @@ SceneRoots:
   - {fileID: 864275087}
   - {fileID: 592769107}
   - {fileID: 1365823572}
+  - {fileID: 1092782822}
