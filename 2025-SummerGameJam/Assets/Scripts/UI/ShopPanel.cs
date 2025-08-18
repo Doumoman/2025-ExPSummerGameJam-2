@@ -19,6 +19,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnEnable()
     {
+        ResetSession();
         RollOffers();
         Render();
     }
@@ -63,10 +64,21 @@ public class ShopUI : MonoBehaviour
         int i = 0;
         for (; i < currentOffers.Count; i++)
         {
+            var card = pool[i];
             pool[i].gameObject.SetActive(true);
+            card.ResetForNewSession();
             pool[i].Bind(currentOffers[i]); // 아이콘/이름/가격 표시됨
         }
         for (; i < pool.Count; i++)
             pool[i].gameObject.SetActive(false);
+    }
+    private void ResetSession()
+    {
+        // 풀에 있는 카드들 비주얼 리셋
+        foreach (var card in pool)
+        {
+            if (card) card.ResetForNewSession();
+        }
+        currentOffers.Clear();
     }
 }

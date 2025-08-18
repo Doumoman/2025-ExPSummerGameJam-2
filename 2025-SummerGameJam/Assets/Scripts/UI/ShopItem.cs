@@ -15,9 +15,13 @@ public class ShopItemCard : MonoBehaviour
     private Item boundItem;
     Button myButton;
 
+    private bool purchased = false;
+    private Color initialCardColor;
+
     private void Awake()
     {
         myButton = GetComponent<Button>();
+        if (cardColor != null) initialCardColor = cardColor.color;
     }
 
     public void Bind(Item item)
@@ -31,6 +35,11 @@ public class ShopItemCard : MonoBehaviour
 
         nameText.text = item.itemName;
         priceText.text = "$" + item.price;
+
+        if (purchased)
+            ApplyPurchasedVisual();
+        else
+            ApplyNormalVisual();
     }
 
     public void OnClickBuy()
@@ -39,11 +48,29 @@ public class ShopItemCard : MonoBehaviour
 
         if (CoinManager.Instance.UseCoin(boundItem.price) && InGameManager.Instance.CanGetItem())
         {
-            cardColor.color = boughtColor;
-            
             InGameManager.Instance.GetItem(itemType);
-
-            myButton.interactable = false;
+            purchased = true;
+            ApplyPurchasedVisual();
         }
     }
+
+    public void ResetForNewSession()
+    {
+        purchased = false;
+        ApplyNormalVisual();
+    }
+
+    void ApplyPurchasedVisual()
+    {
+        if (cardColor) cardColor.color = boughtColor;
+        if (myButton) myButton.interactable = false;
+    }
+
+    void ApplyNormalVisual()
+    {
+        if (cardColor) cardColor.color = initialCardColor;
+        if (myButton) myButton.interactable = true;
+    }
+
+    public bool IsPurchased => purchased;
 }
