@@ -154,8 +154,10 @@ public class ScoreManager : MonoBehaviour
         // �ʵ� �ʱ�ȭ
         InGameManager.Instance.RefreshMap();
 
+        int turnBonus = InGameManager.Instance.HasItem(eItemType.TurnUp);
+
         // �� ���� ������ ���
-        StageTotalTurns = fixedStageTurns;
+        StageTotalTurns = fixedStageTurns + turnBonus;
         Turns = StageTotalTurns;
 
         if (resetRerolls) Rerolls = startRerolls + InGameManager.Instance.HasItem(eItemType.TileRerollUp);

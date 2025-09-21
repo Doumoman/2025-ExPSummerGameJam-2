@@ -45,15 +45,20 @@ public class ShopItemCard : MonoBehaviour
     public void OnClickBuy()
     {
         if (boundItem == null) return;
+        if (purchased) return;
 
-        if (CoinManager.Instance.UseCoin(boundItem.price) && InGameManager.Instance.CanGetItem())
+        // 결제
+        if (!CoinManager.Instance.UseCoin(boundItem.price))
         {
-            InGameManager.Instance.GetItem(itemType);
-            purchased = true;
-            ApplyPurchasedVisual();
+            Debug.Log("코인이 부족합니다.");
+            return;
         }
-    }
 
+        // 지급 + 비주얼 반영
+        InGameManager.Instance.GetItem(itemType);
+        purchased = true;
+        ApplyPurchasedVisual();
+    }
     public void ResetForNewSession()
     {
         purchased = false;

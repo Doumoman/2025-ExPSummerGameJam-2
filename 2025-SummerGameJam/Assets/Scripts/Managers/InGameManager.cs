@@ -122,7 +122,11 @@ public class InGameManager : MonoBehaviour
             }
         }
     }
-
+    public void ResetPlacementCounterForReroll()
+    {
+        // 리롤 시 이번 턴 배치 횟수 리셋
+        placedThisTurn = 0;
+    }
     public void TurnOff()
     {
         if (_lightings == null) return;
@@ -319,20 +323,14 @@ public class InGameManager : MonoBehaviour
     // ============ 아이템 관련 코드 =============
     
     List<(eItemType Type, int Count)> _itemList = new List<(eItemType, int)>();
-
+    const int MaxItems = 5;
     public bool CanGetItem()
     {
-        int itemNum = 0;
+        int total = 0;
         foreach (var item in _itemList)
-        {
-            itemNum += item.Count;
-            if (itemNum >= 5)
-            {
-                return false;
-            }
-        }
+            total += item.Count;
 
-        return true;
+        return total < MaxItems;
     }
 
     public void GetItem(eItemType itemType)
@@ -342,24 +340,22 @@ public class InGameManager : MonoBehaviour
             if (_itemList[i].Type == itemType)
             {
                 _itemList[i] = (itemType, _itemList[i].Count + 1);
-                break;
+
+                // 누적 구매도 로그로 확인
+                Debug.Log($"{itemType} 레벨 +1 (총: {_itemList[i].Count})");
+                return;
             }
         }
+
         _itemList.Add((itemType, 1));
-        
-        Debug.Log($"{itemType} 레벨 1만큼 증가");
+        Debug.Log($"{itemType} 신규 획득 (총: 1)");
     }
 
     public int HasItem(eItemType itemType)
     {
+        int total = 0;
         foreach (var item in _itemList)
-        {
-            if (item.Type == itemType)
-            {
-                return item.Count;
-            }
-        }
-
-        return 0;
+            if (item.Type == itemType) total += item.Count;
+        return total;
     }
 }

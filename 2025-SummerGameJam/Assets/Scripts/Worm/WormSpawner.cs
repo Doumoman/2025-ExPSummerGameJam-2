@@ -60,22 +60,26 @@ public class WormSpawner : MonoBehaviour
     /// 
     public void TryRerollSpawn()
     {
-        if (SM == null) return ;
+        if (SM == null) return;
         if (SM.GetReroll() <= 0)
         {
             Debug.Log("[WormSpawner] Reroll failed: no rerolls left.");
-            return ;
+            return;
         }
 
-        // 리롤 1 소모
+        // 리롤 소모
         SM.AddRerolls(-1);
 
-        // 리롤로 인한 Refresh에서 '소비' 카운트 억제 요청
+        // 이번 턴 배치 카운트 초기화
+        InGameManager.Instance.ResetPlacementCounterForReroll();
+
+        // 기존 세트 제거 시 소비로 잡히는 것을 한 번 억제
         DrawManager.Instance?.SuppressConsumeOnce();
 
-        // 새 3마리로 갱신(턴 소모 X)
+        // 새 세트(3마리) 고정 스폰
         SpawnNewSet(unconditional: true);
     }
+
     /// <summary>
     /// 특정 타입의 가중치를 변경 (1 이상)
     /// </summary>
@@ -158,23 +162,22 @@ public class WormSpawner : MonoBehaviour
     {
         RemoveWorm();
 
-        List<eWormType> worms = PickThree();
-        for (int i = 0; i < worms.Count; i++)
+        // 세트가 바뀌었으니 소비 카운터도 초기화(사용 중이면 유지해도 무방)
+        ResetConsumedCount();
+
+        var worms = PickThree(); // 항상 3개 뽑음
+        for (int i = 0; i < worms.Count && i < 3; i++)
         {
             GameObject worm = Instantiate(wormTile, Vector3.zero, Quaternion.identity, WormContainer);
-
             var wt = worm.GetComponent<WormTile>();
             wt.Initialize(GetWormInfo(worms[i]), spawnPoint[i].position, worms[i]);
-
-            // ★ WormTile이 사용/배치되었을 때 스포너에 알려주도록 연결
-            // 아래의 OnConsumed(또는 적절한 이벤트/콜백)을 WormTile에 구현해줘야 함.
-            // 예) public Action OnConsumed;  사용 시점에 OnConsumed?.Invoke();
             wt.OnConsumed += NotifyWormConsumed;
         }
 
-        // 이번 턴에서 제공되는 남은 개수(리롤도 새 3마리 제공)
-        remainingThisTurn = WormsPerTurn;
+        // 내부 상태
+        remainingThisTurn = WormsPerTurn; // 3
     }
+
 
     private void RemoveWorm()
     {
