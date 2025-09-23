@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: OddTileContiniousSet
   m_EditorClassIdentifier: 
   itemType: 4
-  itemName: "\uD640\uC218 \uD0C0\uC77C \uC5F0\uC18D \uBC30\uCE58"
+  itemName: "\uC9DD\uC218 \uD0C0\uC77C \uC5F0\uC18D \uBC30\uCE58\uC2DC \uC810\uC218
+    \uC99D\uAC00"
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   price: 7
-  itemEffect: "\uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uBD80\uD130 \uC904 \uC9C0\uC6B0\uAE30
-    \uBC1C\uB3D9 \uC2DC \uC810\uC218 \uBC30\uC728\uC774 \uAE30\uC874\uC758 2\uBC30\uAC00
-    \uB41C\uB2E4."
+  itemEffect: "\uC9DD\uC218 \uD0C0\uC77C\uC744 \uC5F0\uC18D\uC73C\uB85C \uBC30\uCE58\uC2DC
+    \uC810\uC218\uAC00 +2\uC529 \uCD94\uAC00\uC801\uC73C\uB85C \uC99D\uAC00\uD569\uB2C8\uB2E4."
   itemIndex: 7

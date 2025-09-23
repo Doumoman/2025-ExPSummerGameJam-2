@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d20f2fa296785246ad3f27ea47a8886, type: 3}
   m_Name: Reroll
   m_EditorClassIdentifier: 
-  itemName: "\uB9AC\uB864"
+  itemType: 0
+  itemName: "\uB9AC\uB864 \uD69F\uC218 \uC99D\uAC00"
   icon: {fileID: -4637118698428625674, guid: 72c78e0c114a25a49b94367e5fa1db2b, type: 3}
   price: 3
-  itemEffect: "\uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C \uD0C0\uC77C \uB9AC\uB864
-    \uD69F\uC218\uB97C \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
+  itemEffect: "\uD0C0\uC77C \uB9AC\uB864 \uD69F\uC218\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   itemIndex: 8
