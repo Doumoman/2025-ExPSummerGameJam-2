@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 5
   itemName: "\uC9DD\uC218 \uD0C0\uC77C \uC5F0\uC18D \uBC30\uCE58\uC2DC \uC810\uC218
     \uC99D\uAC00"
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 5521749577325773609, guid: c082d5e8c9301534caed0f77bfa863ee, type: 3}
   price: 7
   itemEffect: "\uC9DD\uC218 \uD0C0\uC77C\uC744 \uC5F0\uC18D\uC73C\uB85C \uBC30\uCE58\uC2DC
     \uC810\uC218\uAC00 +2\uC529 \uCD94\uAC00\uC801\uC73C\uB85C \uC99D\uAC00\uD569\uB2C8\uB2E4."

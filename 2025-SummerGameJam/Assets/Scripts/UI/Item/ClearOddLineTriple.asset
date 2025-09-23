@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 7
   itemName: "\uD640\uC218 \uC904 \uC9C0\uC6B0\uAE30 \uC810\uC218 \uC99D\uAC00"
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -5647965466718876572, guid: 67f629c85edabcb4ebb85a092665b0d9, type: 3}
   price: 7
   itemEffect: "\uCE78\uC774 \uD640\uC218\uC778 \uC904\uC758 \uC9C0\uC6B0\uAE30 \uC810\uC218\uAC00
     3\uBC30\uB85C \uC801\uC6A9\uB429\uB2C8\uB2E4."
