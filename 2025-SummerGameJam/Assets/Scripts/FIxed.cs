@@ -1,12 +1,20 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fixed : MonoBehaviour
 {
     private void Start()
     {
         SetResolution(); // 초기에 게임 해상도 고정
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetResolution();
+    }
+    
     /* 해상도 설정하는 함수 */
     public void SetResolution()
     {

@@ -545,6 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1274693204}
   - component: {fileID: 1274693203}
+  - component: {fileID: 1274693205}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -582,6 +583,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1274693205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274693202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283bba3265e8225458206b6291b9b8e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1667144944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1060,6 +1073,8 @@ MonoBehaviour:
   goShopFromClearButton: {fileID: 0}
   continueGameButton: {fileID: 325742700}
   quitGameButton: {fileID: 325742699}
+  resumeButton: {fileID: 0}
+  returnToMenuButton: {fileID: 0}
   stageToStart: 1
   cellsPerRow: 10
 --- !u!1660057539 &9223372036854775807
