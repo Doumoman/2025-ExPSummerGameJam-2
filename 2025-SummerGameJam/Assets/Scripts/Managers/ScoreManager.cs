@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -368,6 +369,15 @@ public class ScoreManager : MonoBehaviour
         SaveStageClearProgress(); // �������� ����
         CoinManager.Instance?.SaveCoin(); // ���� ����
 
+        if (!clearPanel)
+        {
+            clearPanel = GameObject.Find("Canvas").transform.Find("ClearPanel").gameObject;
+            clearRowCoinText = clearPanel.transform.Find("CoinGroup").Find("ClearedLine").gameObject.GetComponent<TextMeshProUGUI>();
+            clearRemainTurnText = clearPanel.transform.Find("CoinGroup").Find("LeftTurn").gameObject.GetComponent<TextMeshProUGUI>();
+            clearRemainRerollText = clearPanel.transform.Find("CoinGroup").Find("LeftReroll").gameObject.GetComponent<TextMeshProUGUI>();
+            clearTotalCoinText = clearPanel.transform.Find("CoinGroup").Find("Total").gameObject.GetComponent<TextMeshProUGUI>();
+        }
+        
         if (clearRowCoinText) clearRowCoinText.text = coinFromRowClearsThisStage.ToString("00");
         if (clearRemainTurnText) clearRemainTurnText.text = coinFromTurnsThisStage.ToString("00");
         if (clearRemainRerollText) clearRemainRerollText.text = coinFromRerollsThisStage.ToString("00");
@@ -383,11 +393,6 @@ public class ScoreManager : MonoBehaviour
     }
     public void OpenClearPanel()
     {
-        onStageCleared?.Invoke();
-
-        SoundManager.Instance.OnBgmVolumeChange(0.5f);
-        SoundManager.Instance.EffectSoundOn("WinV1");
-
         if (clearPanel)
         {
             clearPanel.SetActive(true);
@@ -397,6 +402,11 @@ public class ScoreManager : MonoBehaviour
             clearPanel = GameObject.Find("Canvas").transform.Find("ClearPanel").gameObject;
             clearPanel.SetActive(true);
         }
+        
+        onStageCleared?.Invoke();
+
+        SoundManager.Instance.OnBgmVolumeChange(0.5f);
+        SoundManager.Instance.EffectSoundOn("WinV1");
     }
 
     // �� Ŭ���� �г� �ݰ�, ���� UI ����
