@@ -78,7 +78,9 @@ public class InGameManager : MonoBehaviour
         {
             Debug.Log("1111");
             MakeMap();
-            ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);   
+            ScoreManager.Instance.StartStage(ScoreManager.Instance.CurrentStage);
+            DrawManager.Instance.TileContainer = GameObject.Find("Beehive").transform;
+            DrawManager.Instance.WormContainer = GameObject.Find("Worm").transform;
         }
     }
 
@@ -200,7 +202,6 @@ public class InGameManager : MonoBehaviour
                 EvenPlacement++;
                 if (EvenPlacement > 2 && HasItem(eItemType.LikeEvenPosition) > 0)
                 {
-                    Debug.Log("Kexi");  
                     Damage += 1 + EvenPlacement * 2 * HasItem(eItemType.LikeEvenPosition);
                 }
             }
@@ -215,6 +216,7 @@ public class InGameManager : MonoBehaviour
         var result = GetLines();
         foreach (var pos in result.coords)
         {
+            Debug.Log("제거제거");
             InGameManager.Instance._worms[pos.x, pos.y] = null;
         }
         

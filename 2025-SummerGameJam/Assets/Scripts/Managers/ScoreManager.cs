@@ -173,7 +173,15 @@ public class ScoreManager : MonoBehaviour
     public void EndStage()
     {
         onStageEnded?.Invoke();
-        if (shopUIPanel) shopUIPanel.SetActive(true); // ���� ����
+        if (shopUIPanel)
+        {
+            shopUIPanel.SetActive(true);
+        }
+        else
+        {
+            shopUIPanel = GameObject.Find("Canvas").transform.Find("Shop").gameObject;
+            shopUIPanel.SetActive(true);
+        }
     }
     /* ========================= ���൵ ����/�ε� API ========================= */
 
@@ -380,7 +388,15 @@ public class ScoreManager : MonoBehaviour
         SoundManager.Instance.OnBgmVolumeChange(0.5f);
         SoundManager.Instance.EffectSoundOn("WinV1");
 
-        if (clearPanel) clearPanel.SetActive(true);
+        if (clearPanel)
+        {
+            clearPanel.SetActive(true);
+        }
+        else
+        {
+            clearPanel = GameObject.Find("Canvas").transform.Find("ClearPanel").gameObject;
+            clearPanel.SetActive(true);
+        }
     }
 
     // �� Ŭ���� �г� �ݰ�, ���� UI ����
